@@ -1,16 +1,18 @@
 // app/(tabs)/registration.tsx
+import { Theme } from '@/constants/Colors';
 import i18n from '@/constants/translations/i18n';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
-import { ActivityIndicator, Button, Card, HelperText, Text, TextInput, useTheme } from 'react-native-paper';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View, useColorScheme } from 'react-native';
+import { ActivityIndicator, Button, Card, HelperText, Text, TextInput } from 'react-native-paper';
 
 type FieldErrors = { email?: string; password?: string; general?: string };
 
 export default function LoginScreen() {
-  const theme = useTheme();
-  const isDark = theme.dark; // ← Paper's dark mode flag
+  const colorScheme = useColorScheme();
+  const theme = Theme[colorScheme || 'light']; 
+
+
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -34,26 +36,25 @@ export default function LoginScreen() {
 
   return (
     <>
-      <StatusBar style={isDark ? 'light' : 'dark'} />
       <KeyboardAvoidingView
-        style={{ flex: 1, backgroundColor: isDark ? '#000000' : theme.colors.background }}
+        style={{ flex: 1, backgroundColor: theme.colors.background }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.select({ ios: 0, android: 50 })}
       >
         <ScrollView
           contentContainerStyle={styles.scroll}
           keyboardShouldPersistTaps="handled"
-          style={{ backgroundColor: isDark ? '#000000' : theme.colors.background }} // ensure scroll bg matches
+          style={{ backgroundColor: theme.colors.background }} // ensure scroll bg matches
         >
           <View style={styles.container}>
             <View style={[styles.iconWrap, { backgroundColor: theme.colors.secondaryContainer }]}>
               <MaterialIcons name="login" size={56} color={theme.colors.primary} />
             </View>
 
-            <Text variant="headlineMedium" style={styles.title}>
+            <Text variant="headlineMedium" style={[styles.title, { color: theme.colors.onBackground }]}>
               {i18n.t('login')}
             </Text>
-            <Text variant="bodyMedium" style={styles.subtitle}>
+            <Text variant="bodyMedium" style={[styles.subtitle, { color: theme.colors.onBackground }]}>
               {i18n.t('notRegistered')}
             </Text>
 
@@ -61,7 +62,7 @@ export default function LoginScreen() {
               mode="elevated"
               style={[
                 styles.card,
-                { backgroundColor: isDark ? '#111111' : theme.colors.surface }, // darker card in dark mode
+                { backgroundColor: theme.colors.onSecondary }, // darker card in dark mode
               ]}
             >
               <Card.Content style={{ gap: 12 }}>
@@ -113,7 +114,7 @@ export default function LoginScreen() {
                   loading={submitting}
                   disabled={submitting}
                   contentStyle={{ height: 48 }}
-                  style={{ borderRadius: 12, marginTop: 4 }}
+                  style={{ borderRadius: 12, marginTop: 4, backgroundColor: theme.colors.primary }} // use primary color
                 >
                   {i18n.t('login')}
                 </Button>

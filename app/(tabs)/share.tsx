@@ -1,15 +1,20 @@
 import { Text, View } from '@/components/Themed';
+import { Theme } from '@/constants/Colors';
 import i18n from '@/constants/translations/i18n';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import * as SMS from 'expo-sms';
 import React, { useState } from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, useColorScheme } from 'react-native';
 import { Button } from 'react-native-paper';
+
 
 export default function ShareScreen() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const colorScheme = useColorScheme();
+  const theme = Theme[colorScheme || 'light']; 
 
   const shareLocation = async () => {
     try {
@@ -35,10 +40,10 @@ export default function ShareScreen() {
         accuracy: Location.Accuracy.High,
       });
 
-      const url = `https://www.google.com/maps/search/?api=1&query=${location.coords.latitude},${location.coords.longitude}`;
+      const url = `https://maps.google.com/?q=${location.coords.latitude},${location.coords.longitude}`;
 
       // Empty recipients -> opens native SMS composer
-      await SMS.sendSMSAsync([], `Here is my location: ${url}`);
+      await SMS.sendSMSAsync([], `To je moja lokacija: ${url}`);
     } catch (error) {
       console.error('Error sharing location:', error);
       setErrorMsg('Something went wrong while sharing your location.');
@@ -79,6 +84,7 @@ export default function ShareScreen() {
             style={styles.ctaButton}
             contentStyle={styles.ctaContent}
             labelStyle={styles.ctaLabel}
+            buttonColor={theme.colors.primary}
           >
             {i18n.t('shareLocation')}
           </Button>

@@ -1,62 +1,224 @@
 import { Text, View } from '@/components/Themed';
-import i18n from '@/constants/translations/i18n';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 
 export default function HikingScreen() {
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.iconWrap}>
         <MaterialIcons name="hiking" size={64} color="#4CAF50" />
       </View>
 
-      <Text style={styles.title}>{i18n.t('hello')}</Text>
+      <Text style={styles.title}>KODEKS PLANINCA: Zlata pravila</Text>
+      <Text style={styles.subtitle}>za naravovarstvenike in pohodnike</Text>
+
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
       <View style={styles.card}>
-        <Text style={styles.paragraph}>{i18n.t('hikingText')}</Text>
+        <Text style={styles.paragraph}>
+          Gore so naš skupni dom in navdih. Bonton v njih ni zgolj vljudnost, ampak
+          odgovornost in tovarištvo, ki zagotavljata varnost vseh in ohranjata neokrnjeno naravo.
+          Tole je naš neformalni dogovor za srečen in varen korak:
+        </Text>
       </View>
+
+      {/* 1 */}
+      <Section
+        number={1}
+        title="Načrtovanje in Odgovornost (Varnost je v pripravi)"
+        intro="Vsaka tura se začne doma. Bodite iskreni do sebe glede svoje kondicije in ne dovolite, da vas ego zavede. Bolje je priti domov utrujen in zadovoljen kot izčrpan in v težavah."
+        bullets={[
+          'Pravilo Zgodnje Ptice: V gorah bodimo zgodnji. Izognemo se vročini in hitrim popoldanskim nevihtam.',
+          'Oprema je ključ: trdni planinski čevlji, plastenje oblačil, prva pomoč, čelna svetilka (tudi za kratke poti), zaščita pred soncem, polna baterija/power bank.',
+          'Jej in pij, preden si žejen in lačen: redni požirki vode in prigrizki (suho sadje, oreščki, ploščica).',
+          'Povej, kam greš: sporoči cilj in čas povratka bližnjim ali oskrbniku koče – tvoj osnovni SOS sistem.',
+        ]}
+      />
+
+      {/* 2 */}
+      <Section
+        number={2}
+        title="Spoštovanje Narave (Pustimo le stopinje)"
+        intro="Gore so dom tisočerim bitjem; mi smo le gostje. Naš cilj je, da ne pustimo nobene sledi."
+        bullets={[
+          'Vrečka za smeti v nahrbtnik: vse, kar prineseš gor, prineseš tudi dol (tudi robčki, olupki, ogorki).',
+          'Flora in favna: ne trgaj cvetja; živali opazuj na razdalji, ne hrani jih; glasbo pusti doma ali uporabi slušalke.',
+          'Ognjevarni: ogenj le na označenih in varnih mestih.',
+          'Voda je svetinja: brez mil in detergentov v potokih/jezerih; kopanje v visokogorskih jezerih je prepovedano in škoduje ekosistemu.',
+        ]}
+      />
+
+      {/* 3 */}
+      <Section
+        number={3}
+        title="Na Poti in Vzajemna Vljudnost"
+        intro="Planinstvo je eden redkih športov, kjer je pozdrav samoumeven."
+        bullets={[
+          'Pozdrav je obvezen: »Dober dan« ali »Živjo« – znak spoštovanja in priložnost, da preverimo počutje.',
+          'Pravilo prednosti: dogovor in vljudnost na ozkih poteh; komunikacija je ključ (»Bi lahko šel/šla mimo?«).',
+          'Oznake so zakoni: ne hodimo po bližnjicah – erozija, uničenje vegetacije in večja nevarnost zdrsa.',
+          'Palice pod kontrolo: na ozkih/zgodnjih odsekih jih drži ob telesu, da ne ogrožaš drugih.',
+        ]}
+      />
+
+      {/* 4 */}
+      <Section
+        number={4}
+        title="Bivanje v Kočah (Planinski dom je skupni dom)"
+        intro="Koče so zgrajene z žulji prostovoljcev; v njih smo ena velika planinska družina."
+        bullets={[
+          'Rezervacija je zakon: rezerviraj in se drži ure; če zamujaš, pokliči.',
+          'Oskrbnik je šef: ob prihodu se prijavi; spoštuj hišni red (nočni mir 22:00–05:00); čevlje in palice pusti v za to namenjenem prostoru.',
+          'Podpri kočo: naroči obrok ali pijačo; lastno hrano jej diskretno.',
+          'Zasilna ležišča: sprejmi z nasmehom; bivaki/zavetišča so za nujne primere – pusti brezhibno čisto.',
+        ]}
+      />
+
+      {/* 5 */}
+      <Section
+        number={5}
+        title="Solidarnost in Pomoč v Stiski"
+        intro="Tekmovalnost izgine, ko se pojavi nesreča – planinec planincu je brat."
+        bullets={[
+          'Ustavi se in pomagaj: od vode do resne pomoči – naredi, kar zmoreš.',
+          'Svetuj, ne pridigaj: izkušeni naj vljudno svetujejo in spodbujajo.',
+          'Klic v sili (112): ostani miren; sporoči lokacijo, vrsto nesreče, število ponesrečencev; ne prekini, dokler operater ne zaključi.',
+          'Diskretnost: nesreča ni spektakel – ne fotografiraj poškodovanih in ne objavljaj posnetkov.',
+        ]}
+      />
+
+      {/* 6 */}
+      <Section
+        number={6}
+        title="Odnos do Lokalnih Skupnosti in Parkov"
+        intro="Gore se začnejo v dolini – vstopimo z edom spoštovanjem."
+        bullets={[
+          'Parkiraj pametno: le na označenih mestih; ne oviraj dovozov in reševalcev; plačaj parkirnino, kjer je zahtevana.',
+          'Narodni parki: strožja pravila (npr. TNP) – preberi jih; prosto kampiranje in kurjenje ognja sta prepovedana; psi na povodcu.',
+          'Podpri lokalno ekonomijo: kupuj lokalne izdelke, pridelke in storitve.',
+        ]}
+      />
+
+      <View style={[styles.card, { marginTop: 20, marginBottom: 32 }]}>
+        <Text style={[styles.paragraph, { fontStyle: 'italic' }]}>
+          Zaključek: V hribih ne tekmujemo. Skupaj smo in drug drugemu čuvamo hrbet.
+          Dober planinec je tisti, ki se vrne varno domov, za seboj pa pusti le nasmeh
+          in spoštovanje do narave. Srečno in varen korak!
+        </Text>
+      </View>
+    </ScrollView>
+  );
+}
+
+/** --- Small presentational helpers --- */
+function Section({
+  number,
+  title,
+  intro,
+  bullets,
+}: {
+  number: number;
+  title: string;
+  intro?: string;
+  bullets?: string[];
+}) {
+  return (
+    <View style={styles.section}>
+      <Text style={styles.sectionTitle}>{number}. {title}</Text>
+      {intro ? <Text style={[styles.paragraph, { marginTop: 6 }]}>{intro}</Text> : null}
+      {bullets?.map((b, i) => (
+        <View key={i} style={styles.listItem}>
+          <Text style={styles.bullet}>{'\u2022'}</Text>
+          <Text style={styles.listText}>{b}</Text>
+        </View>
+      ))}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  /* layout */
   container: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 32,
   },
+
+  /* header */
   iconWrap: {
     marginBottom: 12,
     borderRadius: 999,
     padding: 10,
-    backgroundColor: 'rgba(76, 175, 80, 0.12)', // subtle green halo
+    backgroundColor: 'rgba(76, 175, 80, 0.12)',
   },
   title: {
     fontSize: 22,
     fontWeight: '700',
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 14,
+    opacity: 0.8,
+    marginTop: 4,
+    textAlign: 'center',
   },
   separator: {
     marginVertical: 16,
     height: 1,
     width: '70%',
   },
+
+  /* cards/sections */
   card: {
-    width: '80%',
+    width: '100%',
     borderRadius: 16,
     padding: 16,
     alignItems: 'center',
-    // soft shadow
-    elevation: 3, // Android
-    shadowColor: '#000', // iOS
+    elevation: 3, // Android shadow
+    shadowColor: '#000', // iOS shadow
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
+    marginVertical: 8,
   },
+  section: {
+    width: '100%',
+    borderRadius: 16,
+    padding: 16,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    marginVertical: 8,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+  },
+
+  /* text */
   paragraph: {
-    textAlign: 'center',
-    lineHeight: 20,
+    textAlign: 'left',
+    lineHeight: 22,
     fontSize: 16,
+  },
+
+  /* list */
+  listItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginTop: 8,
+  },
+  bullet: {
+    fontSize: 18,
+    lineHeight: 22,
+    marginRight: 8,
+  },
+  listText: {
+    flex: 1,
+    fontSize: 16,
+    lineHeight: 22,
   },
 });

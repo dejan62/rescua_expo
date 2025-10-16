@@ -2,23 +2,23 @@
   "expo": {
     "name": "RESCUA",
     "slug": "RescuaPoc3",
-    "version": "0.1.1",
+    "version": "0.2.2",
     "orientation": "portrait",
-    "icon": "./assets/images/RESCUA-transparent.png",
+    "icon": "./assets/images/LOGO_BLUE_SQUARE.png",
     "scheme": "com.rescua",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/RESCUA-transparent.png",
+      "image": "./assets/images/LOGO_BLUE_SQUARE.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/LOGO_BLUE_SQUARE.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.rescua",

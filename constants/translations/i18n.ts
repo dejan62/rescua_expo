@@ -38,11 +38,12 @@ const i18n = new I18n({
     firstAidText: 'Na tej strani si lahko preberete nekaj osnov o prvi pomoči.',
     login: 'Prijava',
     notRegistered: 'Še niste registrirani?',
-    sosInstruction: 'Pritisnite gumb, da prek SMS sporočila delite svojo trenutno GPS lokacijo z reševalno ekipo.',
-    shareInstruction: 'Pritisnite gumb, da prek SMS sporočila delite svojo trenutno GPS lokacijo s prijateljem.',
+    sosInstruction: 'Pritisnite gumb, da preko SMS sporočila delite svojo trenutno GPS lokacijo z reševalno ekipo.',
+    shareInstruction: 'Pritisnite gumb, da preko SMS sporočila delite svojo trenutno GPS lokacijo s prijateljem.',
     shareLocation: 'Deli lokacijo',
     firstAid: 'Prva pomoč',
-    hiking: 'Pohodništvo'
+    hiking: 'Pohodništvo',
+    etiquette: 'Bonton'
   },
   cs: { 
     hello: 'Ahoj', 
