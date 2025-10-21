@@ -2,8 +2,8 @@ import { getLocales } from 'expo-localization';
 import { I18n } from 'i18n-js';
 
 const i18n = new I18n({
-  en: { 
-    hello: 'Hello', 
+  en: {
+    hello: 'Hello',
     registration: 'Registration',
     gettingLocation: 'Getting location…',
     hikingText: 'On this page you can read something about mountain etiquette.',
@@ -14,10 +14,12 @@ const i18n = new I18n({
     shareInstruction: 'Press the button to share your current GPS location with a friend via SMS.',
     shareLocation: 'Share Location',
     firstAid: 'First Aid',
-    hiking: 'Hiking'
+    hiking: 'Hiking',
+    etiquette: 'Etiquette',
+    usefulLinks: 'Useful Links',
   },
-  de: { 
-    hello: 'Hallo', 
+  de: {
+    hello: 'Hallo',
     registration: 'Registrierung',
     gettingLocation: 'Standort wird abgerufen…',
     hikingText: 'Auf dieser Seite können Sie etwas über Bergetikette lesen.',
@@ -28,10 +30,12 @@ const i18n = new I18n({
     shareInstruction: 'Tippen Sie auf die Schaltfläche, um Ihren aktuellen GPS-Standort per SMS mit einem Freund zu teilen.',
     shareLocation: 'Standort teilen',
     firstAid: 'Erste Hilfe',
-    hiking: 'Wandern'
+    hiking: 'Wandern',
+    etiquette: 'Etikette',
+    usefulLinks: 'Nützliche Links',
   },
-  sl: { 
-    hello: 'Živjo', 
+  sl: {
+    hello: 'Živjo',
     registration: 'Registracija',
     gettingLocation: 'Pridobivanje lokacije…',
     hikingText: 'Na tej strani si lahko preberete nekaj o gorskem bontonu.',
@@ -43,10 +47,11 @@ const i18n = new I18n({
     shareLocation: 'Deli lokacijo',
     firstAid: 'Prva pomoč',
     hiking: 'Pohodništvo',
-    etiquette: 'Bonton'
+    etiquette: 'Bonton',
+    usefulLinks: 'Koristne povezave'
   },
-  cs: { 
-    hello: 'Ahoj', 
+  cs: {
+    hello: 'Ahoj',
     registration: 'Registrace',
     gettingLocation: 'Získávání polohy…',
     hikingText: 'Na této stránce si můžete přečíst něco o horské etiketě.',
@@ -57,10 +62,12 @@ const i18n = new I18n({
     shareInstruction: 'Stisknutím tlačítka sdílíte svou aktuální polohu GPS s přítelem prostřednictvím SMS.',
     shareLocation: 'Sdílet polohu',
     firstAid: 'První pomoc',
-    hiking: 'Turistika' 
+    hiking: 'Turistika',
+    etiquette: 'Etiketa',
+    usefulLinks: 'Užitečné odkazy',
   },
-  pl: { 
-    hello: 'Cześć', 
+  pl: {
+    hello: 'Cześć',
     registration: 'Rejestracja',
     gettingLocation: 'Pobieranie lokalizacji…',
     hikingText: 'Na tej stronie możesz przeczytać coś o górskim savoir-vivre.',
@@ -71,10 +78,12 @@ const i18n = new I18n({
     shareInstruction: 'Naciśnij przycisk, aby udostępnić swoją bieżącą lokalizację GPS znajomemu przez SMS.',
     shareLocation: 'Udostępnij lokalizację',
     firstAid: 'Pierwsza pomoc',
-    hiking: 'Wędrówki'
+    hiking: 'Wędrówki',
+    etiquette: 'Etykieta',
+    usefulLinks: 'Przydatne linki',
   },
-  it: { 
-    hello: 'Ciao', 
+  it: {
+    hello: 'Ciao',
     registration: 'Registrazione',
     gettingLocation: 'Ottenendo la posizione…',
     hikingText: 'In questa pagina puoi leggere qualcosa sul galateo di montagna.',
@@ -85,10 +94,12 @@ const i18n = new I18n({
     shareInstruction: 'Premi il pulsante per condividere la tua posizione GPS attuale con un amico via SMS.',
     shareLocation: 'Condividi posizione',
     firstAid: 'Primo soccorso',
-    hiking: 'Escursionismo'
+    hiking: 'Escursionismo',
+    etiquette: 'Galateo',
+    usefulLinks: 'Link utili',
   },
-  fr: { 
-    hello: 'Bonjour', 
+  fr: {
+    hello: 'Bonjour',
     registration: 'Inscription',
     gettingLocation: 'Récupération de la position…',
     hikingText: 'Sur cette page, vous pouvez lire quelque chose sur l’étiquette de la montagne.',
@@ -99,40 +110,63 @@ const i18n = new I18n({
     shareInstruction: 'Appuyez sur le bouton pour partager votre position GPS actuelle avec un ami par SMS.',
     shareLocation: 'Partager la position',
     firstAid: 'Premiers secours',
-    hiking: 'Randonnée'
+    hiking: 'Randonnée',
+    etiquette: 'Étiquette',
+    usefulLinks: 'Liens utiles',
   },
-  hu: { 
-    hello: 'Szia', 
+  hu: {
+    hello: 'Szia',
     registration: 'Regisztráció',
     gettingLocation: 'Helyzet lekérése…',
-    hikingText: 'Ezen az oldalon olvashatsz valamit a hegyi etikettől.',
-    firstAidText: 'Ezen az oldalon néhány alapvető elsősegély-tudnivalót olvashat.',
+    hikingText: 'Ezen az oldalon a hegyi etikettről olvashatsz.',
+    firstAidText: 'Ezen az oldalon néhány alapvető elsősegély-tudnivalót olvashatsz.',
     login: 'Bejelentkezés',
-    notRegistered: 'Pas encore inscrit ?',
-    sosInstruction: 'Nyomja meg a gombot az aktuális GPS-helyzetének SMS-ben történő megosztásához a mentőcsapattal.',
-    shareInstruction: 'Nyomja meg a gombot, hogy aktuális GPS-helyzetét SMS-ben megossza egy ismerősével.',
+    notRegistered: 'Még nem regisztráltál?',
+    sosInstruction: 'Nyomd meg a gombot, hogy az aktuális GPS-helyzetedet SMS-ben megoszd a mentőcsapattal.',
+    shareInstruction: 'Nyomd meg a gombot, hogy az aktuális GPS-helyzetedet SMS-ben megoszd egy ismerősöddel.',
     shareLocation: 'Helyzet megosztása',
     firstAid: 'Elsősegély',
-    hiking: 'Túrázás'
+    hiking: 'Túrázás',
+    etiquette: 'Etikett',
+    usefulLinks: 'Hasznos hivatkozások',
   },
-  hr: { 
-    hello: 'Bok', 
+  hr: {
+    hello: 'Bok',
     registration: 'Registracija',
     gettingLocation: 'Dohvaćanje lokacije…',
     hikingText: 'Na ovoj stranici možete pročitati nešto o planinskom bontonu.',
     firstAidText: 'Na ovoj stranici možete pročitati osnovne informacije o prvoj pomoći.',
     login: 'Prijava',
-    notRegistered: 'Pas encore inscrit ?',
+    notRegistered: 'Još niste registrirani?',
     sosInstruction: 'Pritisnite gumb za dijeljenje svoje trenutačne GPS lokacije sa spasilačkim timom putem SMS-a.',
-    shareInstruction: 'Pritisnite gumb kako biste podijelili svoju trenutnu GPS lokaciju s prijateljem putem SMS-a.',
+    shareInstruction: 'Pritisnite gumb kako biste podijelili svoju trenutačnu GPS lokaciju s prijateljem putem SMS-a.',
     shareLocation: 'Podijeli lokaciju',
     firstAid: 'Prva pomoć',
-    hiking: 'Planinarenje'
+    hiking: 'Planinarenje',
+    etiquette: 'Bonton',
+    usefulLinks: 'Korisne poveznice',
+  },
+  sr: {
+    hello: 'Zdravo',
+    registration: 'Registracija',
+    gettingLocation: 'Preuzimanje lokacije…',
+    hikingText: 'Na ovoj stranici možete pročitati nešto o planinskom bontonu.',
+    firstAidText: 'Na ovoj stranici možete pročitati osnovne informacije o prvoj pomoći.',
+    login: 'Prijava',
+    notRegistered: 'Još niste registrovani?',
+    sosInstruction: 'Pritisnite dugme da putem SMS-a podelite svoju trenutnu GPS lokaciju sa spasilačkim timom.',
+    shareInstruction: 'Pritisnite dugme da putem SMS-a podelite svoju trenutnu GPS lokaciju sa prijateljem.',
+    shareLocation: 'Podeli lokaciju',
+    firstAid: 'Prva pomoć',
+    hiking: 'Planinarenje',
+    etiquette: 'Bonton',
+    usefulLinks: 'Korisni linkovi',
   },
 });
 
 i18n.enableFallback = true;
 i18n.defaultLocale = 'en';
+
 const [{ languageTag }] = getLocales();
 i18n.locale = languageTag;
 
