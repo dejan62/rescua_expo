@@ -1,28 +1,41 @@
-import { Text, View } from '@/components/Themed';
+// app/(tabs)/hiking.tsx (example path)
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { ScrollView, StyleSheet } from 'react-native';
+import React from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { Card, Divider, List, Text, useTheme } from 'react-native-paper';
 
 export default function HikingScreen() {
+  const theme = useTheme();
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.iconWrap}>
-        <MaterialIcons name="hiking" size={64} color="#4CAF50" />
+      {/* Header icon */}
+      <View style={[styles.iconWrap, { backgroundColor: theme.colors.surfaceVariant }]}>
+        <MaterialIcons name="hiking" size={64} color={theme.colors.primary} />
       </View>
 
-      <Text style={styles.title}>KODEKS PLANINCA: Zlata pravila</Text>
-      <Text style={styles.subtitle}>za naravovarstvenike in pohodnike</Text>
+      {/* Title */}
+      <Text variant="headlineMedium" style={styles.center}>
+        KODEKS PLANINCA: Zlata pravila
+      </Text>
+      <Text variant="titleSmall" style={[styles.center, { opacity: 0.8, marginTop: 4 }]}>
+        za naravovarstvenike in pohodnike
+      </Text>
 
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <Divider style={{ marginVertical: 16, width: '70%' }} />
 
-      <View style={styles.card}>
-        <Text style={styles.paragraph}>
-          Gore so naš skupni dom in navdih. Bonton v njih ni zgolj vljudnost, ampak
-          odgovornost in tovarištvo, ki zagotavljata varnost vseh in ohranjata neokrnjeno naravo.
-          Tole je naš neformalni dogovor za srečen in varen korak:
-        </Text>
-      </View>
+      {/* Intro card */}
+      <Card mode="elevated" style={styles.card}>
+        <Card.Content>
+          <Text variant="bodyLarge">
+            Gore so naš skupni dom in navdih. Bonton v njih ni zgolj vljudnost, ampak
+            odgovornost in tovarištvo, ki zagotavljata varnost vseh in ohranjata neokrnjeno naravo.
+            Tole je naš neformalni dogovor za srečen in varen korak:
+          </Text>
+        </Card.Content>
+      </Card>
 
-      {/* 1 */}
+      {/* Sections */}
       <Section
         number={1}
         title="Načrtovanje in Odgovornost (Varnost je v pripravi)"
@@ -35,7 +48,6 @@ export default function HikingScreen() {
         ]}
       />
 
-      {/* 2 */}
       <Section
         number={2}
         title="Spoštovanje Narave (Pustimo le stopinje)"
@@ -48,7 +60,6 @@ export default function HikingScreen() {
         ]}
       />
 
-      {/* 3 */}
       <Section
         number={3}
         title="Na Poti in Vzajemna Vljudnost"
@@ -61,7 +72,6 @@ export default function HikingScreen() {
         ]}
       />
 
-      {/* 4 */}
       <Section
         number={4}
         title="Bivanje v Kočah (Planinski dom je skupni dom)"
@@ -74,7 +84,6 @@ export default function HikingScreen() {
         ]}
       />
 
-      {/* 5 */}
       <Section
         number={5}
         title="Solidarnost in Pomoč v Stiski"
@@ -87,11 +96,10 @@ export default function HikingScreen() {
         ]}
       />
 
-      {/* 6 */}
       <Section
         number={6}
         title="Odnos do Lokalnih Skupnosti in Parkov"
-        intro="Gore se začnejo v dolini – vstopimo z edom spoštovanjem."
+        intro="Gore se začnejo v dolini – vstopimo z vsem spoštovanjem."
         bullets={[
           'Parkiraj pametno: le na označenih mestih; ne oviraj dovozov in reševalcev; plačaj parkirnino, kjer je zahtevana.',
           'Narodni parki: strožja pravila (npr. TNP) – preberi jih; prosto kampiranje in kurjenje ognja sta prepovedana; psi na povodcu.',
@@ -99,18 +107,21 @@ export default function HikingScreen() {
         ]}
       />
 
-      <View style={[styles.card, { marginTop: 20, marginBottom: 32 }]}>
-        <Text style={[styles.paragraph, { fontStyle: 'italic' }]}>
-          Zaključek: V hribih ne tekmujemo. Skupaj smo in drug drugemu čuvamo hrbet.
-          Dober planinec je tisti, ki se vrne varno domov, za seboj pa pusti le nasmeh
-          in spoštovanje do narave. Srečno in varen korak!
-        </Text>
-      </View>
+      {/* Outro */}
+      <Card mode="elevated" style={[styles.card, { marginTop: 20, marginBottom: 32 }]}>
+        <Card.Content>
+          <Text variant="bodyLarge" style={{ fontStyle: 'italic' }}>
+            Zaključek: V hribih ne tekmujemo. Skupaj smo in drug drugemu čuvamo hrbet.
+            Dober planinec je tisti, ki se vrne varno domov, za seboj pa pusti le nasmeh
+            in spoštovanje do narave. Srečno in varen korak!
+          </Text>
+        </Card.Content>
+      </Card>
     </ScrollView>
   );
 }
 
-/** --- Small presentational helpers --- */
+/** --- Paper Section helper --- */
 function Section({
   number,
   title,
@@ -123,102 +134,52 @@ function Section({
   bullets?: string[];
 }) {
   return (
-    <View style={styles.section}>
-      <Text style={styles.sectionTitle}>{number}. {title}</Text>
-      {intro ? <Text style={[styles.paragraph, { marginTop: 6 }]}>{intro}</Text> : null}
-      {bullets?.map((b, i) => (
-        <View key={i} style={styles.listItem}>
-          <Text style={styles.bullet}>{'\u2022'}</Text>
-          <Text style={styles.listText}>{b}</Text>
-        </View>
-      ))}
-    </View>
-  );
+      <Card mode="elevated" style={styles.section}>
+        <Card.Content style={{ paddingBottom: 0 }}>
+          {/* Smaller + wraps to two lines */}
+          <Text
+            variant="titleMedium"
+            style={{ fontWeight: '700' }}
+            numberOfLines={2}
+          >
+            {number}. {title}
+          </Text>
+        </Card.Content>
+
+        <Card.Content style={{ gap: 8, paddingTop: 8 }}>
+          {intro ? <Text variant="bodyLarge">{intro}</Text> : null}
+          {bullets?.map((b, i) => (
+            <List.Item
+              key={i}
+              title={b}
+              titleNumberOfLines={6}
+              left={props => <List.Icon {...props} icon="circle-small" />}
+            />
+          ))}
+        </Card.Content>
+      </Card>
+    );
 }
 
+/** --- Styles kept minimal; Paper handles most visuals --- */
 const styles = StyleSheet.create({
-  /* layout */
   container: {
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingTop: 16,
     paddingBottom: 32,
+    gap: 8,
   },
-
-  /* header */
+  center: { textAlign: 'center' },
   iconWrap: {
     marginBottom: 12,
     borderRadius: 999,
     padding: 10,
-    backgroundColor: 'rgba(76, 175, 80, 0.12)',
   },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 14,
-    opacity: 0.8,
-    marginTop: 4,
-    textAlign: 'center',
-  },
-  separator: {
-    marginVertical: 16,
-    height: 1,
-    width: '70%',
-  },
-
-  /* cards/sections */
   card: {
     width: '100%',
-    borderRadius: 16,
-    padding: 16,
-    alignItems: 'center',
-    elevation: 3, // Android shadow
-    shadowColor: '#000', // iOS shadow
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    marginVertical: 8,
   },
   section: {
     width: '100%',
-    borderRadius: 16,
-    padding: 16,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    marginVertical: 8,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-  },
-
-  /* text */
-  paragraph: {
-    textAlign: 'left',
-    lineHeight: 22,
-    fontSize: 16,
-  },
-
-  /* list */
-  listItem: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginTop: 8,
-  },
-  bullet: {
-    fontSize: 18,
-    lineHeight: 22,
-    marginRight: 8,
-  },
-  listText: {
-    flex: 1,
-    fontSize: 16,
-    lineHeight: 22,
   },
 });

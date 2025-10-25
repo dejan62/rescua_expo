@@ -18,54 +18,71 @@ type LinkSection = {
 
 const SECTIONS: LinkSection[] = [
   {
-    header: 'Mountain Safety',
+    header: 'Emergency',
     items: [
       {
-        title: 'GRZS',
-        description: 'Gorska Reševalna Zveza Slovenije',
-        url: 'https://www.grzs.si/',
-        icon: 'helicopter',
+        title: 'Call 112 (EU Emergency)',
+        description: 'Dial now from your phone',
+        url: 'tel:041565455',
+        icon: 'phone',
       },
       {
-        title: 'PZS',
-        description: 'Planinska Zveza Slovenije',
-        url: 'https://pzs.si/',
-        icon: 'hiking',
-      },
-      {
-        title: 'Policija',
-        description: '',
-        url: 'https://www.policija.si/',
-        icon: 'police-station',
+        title: 'SMS to 112',
+        description: 'Open SMS composer to 112',
+        url: 'sms:041565455',
+        icon: 'message-text',
       },
     ],
   },
   {
-    header: 'Vreme',
+    header: 'Navigation & Maps',
     items: [
       {
-        title: 'Meteo Slovenija',
-        description: 'Vremenska napoved za gorski svet',
-        url: 'https://meteo.arso.gov.si/met/sl/weather/bulletin/mountain/',
+        title: 'Google Maps',
+        description: 'maps.google.com',
+        url: 'https://maps.google.com',
+        icon: 'map',
+      },
+      {
+        title: 'OpenStreetMap',
+        description: 'www.openstreetmap.org',
+        url: 'https://www.openstreetmap.org',
+        icon: 'map-search',
+      },
+    ],
+  },
+  {
+    header: 'Weather',
+    items: [
+      {
+        title: 'Windy',
+        description: 'Global wind & weather',
+        url: 'https://www.windy.com',
+        icon: 'weather-windy',
+      },
+      {
+        title: 'MeteoBlue',
+        description: 'Forecasts & maps',
+        url: 'https://www.meteoblue.com',
         icon: 'weather-partly-cloudy',
       },
-      {
-        title: 'Meteo Slovenija - Plazovi',
-        description: 'Nevarnost plazov',
-        url: 'https://meteo.arso.gov.si/met/sl/weather/bulletin/mountain/avalanche/bulletin/',
-        icon: 'slope-downhill',
-      },
     ],
   },
   {
-    header: 'Prva pomoč',
+    header: 'Safety & Mountain Info',
     items: [
       {
-        title: 'Prva pomoč',
-        description: '',
-        url: 'https://prva-pomoc.si/',
+        title: 'Red Cross – First Aid',
+        description: 'Basic guidance and tips',
+        url: 'https://www.redcross.org/first-aid/first-aid-steps.html',
         icon: 'medical-bag',
-      }
+      },
+      {
+        title: 'Mountain Etiquette',
+        description: 'Hiking code & best practices',
+        url: 'https://www.alpenverein.de/bergsport/sicher-am-berg/berge-huetten/10-berghuetttenregeln_aid_33750.html',
+        icon: 'hiking',
+      },
     ],
   },
 ];

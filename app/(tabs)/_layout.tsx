@@ -55,6 +55,23 @@ export default function TabLayout() {
                     />
                   )}
                 </Pressable>
+            </Link>              
+            <Link href="/linksExample" asChild>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="Settings"
+                  hitSlop={10}
+                  android_ripple={{ radius: 20 }}
+                  style={{ paddingHorizontal: 8, paddingVertical: 4 }}
+                >
+                  {({ pressed }) => (
+                    <TabBarIcon
+                      name="add-link"
+                      color={Colors[colorScheme ?? 'light'].text}
+                      style={{ opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
             </Link>
             
             <Link href="/login" asChild>
