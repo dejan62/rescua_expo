@@ -55,6 +55,7 @@ function RootLayoutNav() {
         <Stack.Screen name="login" options={{ headerShown: true, title: 'Login' }} />
         <Stack.Screen name="links" options={{ headerShown: true, title: 'Useful Links' }} />
         <Stack.Screen name="linksExample" options={{ headerShown: true, title: 'Useful Links Example' }} />
+        <Stack.Screen name="shareSettings" options={{ headerShown: true, title: 'Settings' }} />
       </Stack>
     </ThemeProvider>
   );
