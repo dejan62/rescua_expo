@@ -100,7 +100,7 @@ export default function TabLayout() {
         options={{
           title: i18n.t('shareLocation'), 
           tabBarIcon: ({ color }) => <TabBarIcon name="add-location" color={color} />,
-           headerRight: () => (
+          headerRight: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 8 }}>
               <Link href="/shareSettings" asChild>
                 <Pressable
@@ -118,10 +118,7 @@ export default function TabLayout() {
                     />
                   )}
                 </Pressable>
-            </Link>              
-
-            
-            
+            </Link>         
           </View>
           ),
         }}
@@ -131,25 +128,27 @@ export default function TabLayout() {
         options={{
           title: 'SOS',
           tabBarIcon: ({ color }) => <TabBarIcon name="sos" color={'#BA1A1A'} />,
-                   /* headerRight: () => (
-           <Link href="/login" asChild>
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel="Login"
-                hitSlop={10}
-                android_ripple={{ radius: 20 }}
-                style={{ paddingHorizontal: 8, paddingVertical: 4 }}
-              >
-                {({ pressed }) => (
-                  <TabBarIcon
-                    name="login"
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),*/
+          headerRight: () => (
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 8 }}>
+              <Link href="/sosSettings" asChild>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="Settings"
+                  hitSlop={10}
+                  android_ripple={{ radius: 20 }}
+                  style={{ paddingHorizontal: 8, paddingVertical: 4 }}
+                >
+                  {({ pressed }) => (
+                    <TabBarIcon
+                      name="settings"
+                      color={Colors[colorScheme ?? 'light'].text}
+                      style={{ opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+            </Link>         
+          </View>
+          ),
         }}
       />
       <Tabs.Screen

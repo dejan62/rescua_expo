@@ -31,6 +31,7 @@ export default function SosScreen() {
       });
 
       const url = `https://maps.google.com/?q=${location.coords.latitude},${location.coords.longitude}`;
+      console.log('Generated Google Maps URL:', url.length);
      
 
       await SMS.sendSMSAsync(
