@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "RESCUA",
-    "slug": "RescuaPoc3",
-    "version": "0.4.1",
+    "slug": "Rescua",
+    "version": "0.9.0",
     "orientation": "portrait",
     "icon": "./assets/images/LOGO_BLUE_SQUARE.png",
     "scheme": "com.rescua",
