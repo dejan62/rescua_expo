@@ -1,4 +1,5 @@
 // app/(tabs)/index.tsx (or HomeScreen.tsx)
+import { useElevation } from '@/hooks/useElevation'; // ← add
 import { useOpenMeteo } from '@/hooks/useOpenMeteo';
 import * as Location from 'expo-location';
 import React from 'react';
@@ -23,6 +24,8 @@ export default function HomeScreen() {
   const [tab, setTab] = React.useState<'pos' | 'wx'>('pos'); // ← toggle state
 
   const { weather, loading: wLoading, error: wError } = useOpenMeteo(coords.latitude, coords.longitude);
+  const { elevation, loading: eLoading, error: eError } = useElevation(coords.latitude, coords.longitude); // ← add
+
 
   React.useEffect(() => {
     let sub: Location.LocationSubscription | null = null;
@@ -129,23 +132,31 @@ export default function HomeScreen() {
                 <Text style={{ marginLeft: 8 }}>Getting location…</Text>
               </View>
             )}
-            {status === 'denied' && (
-              <Text>Location permission denied. Enable it in Settings.</Text>
-            )}
+            {status === 'denied' && <Text>Location permission denied. Enable it in Settings.</Text>}
             {!!error && status !== 'loading' && <Text>{error}</Text>}
 
             <StatRow label="Latitude" value={fmt(coords.latitude, 6)} />
             <StatRow label="Longitude" value={fmt(coords.longitude, 6)} />
             <StatRow label="Accuracy" value={coords.accuracy != null ? `${Math.round(coords.accuracy)} m` : '—'} />
+
+            {/* NEW: Elevation above mean sea level (preferred) */}
             <StatRow
-              label="Altitude"
+              label="Elevation (MSL)"
+              value={
+                eLoading ? '…' :
+                eError ? '—' :
+                elevation != null ? `${Math.round(elevation)} m` : '—'
+              }
+            />
+
+            {/* Keep raw GPS altitude but label it clearly */}
+            <StatRow
+              label="Altitude (GPS ellipsoid)"
               value={coords.altitude != null ? `${Math.round(coords.altitude)} m` : '—'}
             />
+
             <StatRow label="Heading" value={headingText} />
-            <StatRow
-              label="Speed"
-              value={kmh != null ? `${kmh.toFixed(1)} km/h` : '—'}
-            />
+            <StatRow label="Speed" value={kmh != null ? `${kmh.toFixed(1)} km/h` : '—'} />
           </Card.Content>
           <Card.Actions>
             <Button onPress={toggleWatching}>{watching ? 'Pause' : 'Refresh once'}</Button>
