@@ -1,7 +1,8 @@
 // app/(tabs)/sosSettings.tsx
+import { Theme } from '@/constants/Colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View, useColorScheme } from 'react-native';
 import {
   ActivityIndicator,
   Button,
@@ -30,6 +31,11 @@ export default function SosSettingsScreen() {
   const [allergies, setAllergies] = React.useState('');
   const [snack, setSnack] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState(true);
+
+  const colorScheme = useColorScheme();
+  const theme = Theme[colorScheme || 'light']; 
+
+  const ALLERGIES_MAX = 100;
 
   // Load persisted settings
   React.useEffect(() => {
@@ -98,18 +104,14 @@ export default function SosSettingsScreen() {
   return (
     <PaperProvider>
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: theme.colors.background }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.select({
-          ios: 64,   // tweak if header is taller/shorter
-          android: 0,
-        })}
+        keyboardVerticalOffset={Platform.select({ ios: 0, android: 50 })}
       >
-      <ScrollView
-          contentContainerStyle={[styles.container, { paddingBottom: 24 }]}
+        <ScrollView
+          contentContainerStyle={styles.scroll}
           keyboardShouldPersistTaps="handled"
-          // iOS 15+ automatically adds insets when the keyboard opens:
-          automaticallyAdjustKeyboardInsets
+          style={{ backgroundColor: theme.colors.background }} // ensure scroll bg matches
         >
       {/* BLOOD TYPE */}
       <Card mode="elevated" style={styles.card}>
@@ -140,27 +142,24 @@ export default function SosSettingsScreen() {
               { value: '-', label: 'Rh -' },
             ]}
             style={{ opacity: unknown ? 0.4 : 1 }}
-            
           />
-        
-
         </Card.Content>
       </Card>
 
       {/* ALLERGIES */}
       <Card mode="elevated" style={styles.card}>
-        <Card.Title title="Allergies" titleVariant="titleMedium" />
+        <Card.Title title="Allergies & diseases" titleVariant="titleMedium" />
         <Card.Content>
-          <TextInput
-            mode="outlined"
-            multiline
-            numberOfLines={5}
-            value={allergies}
-            onChangeText={setAllergies}
-            placeholder="List important allergies (e.g., penicillin, peanuts, wasp stings)…"
-            right={<TextInput.Affix text={`${allergies.length}/1000`} />}
-            maxLength={1000}
-          />
+        <TextInput
+          mode="outlined"
+          multiline
+          numberOfLines={5}
+          value={allergies}
+          onChangeText={(t) => setAllergies(t.slice(0, ALLERGIES_MAX))}
+          placeholder="List important allergies (e.g., penicillin, peanuts, wasp stings)…"
+          right={<TextInput.Affix text={`${allergies.length}/${ALLERGIES_MAX}`} />}
+          maxLength={ALLERGIES_MAX}
+        />
           <HelperText type="info" style={{ marginTop: 6 }}>
             This can help responders act safely in emergencies.
           </HelperText>
@@ -182,6 +181,7 @@ export default function SosSettingsScreen() {
 }
 
 const styles = StyleSheet.create({
+  scroll: { flexGrow: 1 },
   container: { flex: 1, padding: 16, gap: 16 },
   card: { width: '100%' },
 });

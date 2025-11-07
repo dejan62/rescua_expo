@@ -6,11 +6,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import * as SMS from 'expo-sms';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { ActivityIndicator, StyleSheet, useColorScheme } from 'react-native';
 import { Button } from 'react-native-paper';
 
-type FavContact = { id: string; name: string; phone: string };
+type FavContact = { id?: string; name?: string; phone?: string };
 
 const KV_DEFAULT_TEXT = 'share.defaultText';
 const KV_FAVORITE_CONTACT = 'share.favoriteContact';
@@ -18,14 +18,14 @@ const KV_FAVORITE_CONTACT = 'share.favoriteContact';
 export default function ShareScreen() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
   const [defaultText, setDefaultText] = useState<string>('');
   const [favorite, setFavorite] = useState<FavContact | null>(null);
 
   const colorScheme = useColorScheme();
   const theme = Theme[colorScheme || 'light'];
+  const iconColor = '#42A5F5';
 
-    const loadSettings = React.useCallback(async () => {
+  const loadSettings = React.useCallback(async () => {
     try {
       const [t, f] = await Promise.all([
         AsyncStorage.getItem(KV_DEFAULT_TEXT),
@@ -33,7 +33,7 @@ export default function ShareScreen() {
       ]);
       if (t != null) setDefaultText(t);
       if (f) {
-        try { setFavorite(JSON.parse(f)); } catch {}
+        try { setFavorite(JSON.parse(f)); } catch { setFavorite(null); }
       } else {
         setFavorite(null);
       }
@@ -41,75 +41,74 @@ export default function ShareScreen() {
       // ignore
     }
   }, []);
-  // 1) initial load
-  React.useEffect(() => {
-    loadSettings();
-  }, [loadSettings]);
 
-  // 2) reload whenever screen is focused
-  useFocusEffect(
-    React.useCallback(() => {
-      loadSettings();
-      // no cleanup needed
-    }, [loadSettings])
-  );
+  React.useEffect(() => { loadSettings(); }, [loadSettings]);
+  useFocusEffect(React.useCallback(() => { loadSettings(); }, [loadSettings]));
+
+  const instruction = useMemo(() => {
+    const raw = i18n.t('shareInstruction') as string;
+    return raw === 'shareInstruction'
+      ? 'Press the button to share your current GPS location via SMS.'
+      : raw;
+  }, []);
 
   const shareLocation = async () => {
     try {
       setErrorMsg(null);
       setLoading(true);
 
-      // Check SMS capability
+      // 1) SMS capability
       const smsOk = await SMS.isAvailableAsync();
       if (!smsOk) {
-        setErrorMsg('SMS is not available on this device.');
+        setErrorMsg(i18n.t?.('smsNotAvailable') ?? 'SMS is not available on this device.');
         return;
       }
 
-      // Location permission
+      // 2) Location permission
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+        setErrorMsg(i18n.t?.('locDenied') ?? 'Permission to access location was denied.');
         return;
       }
 
-      // Get position
-      const location = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.High,
-      });
+      // 3) Get position with a safety timeout (in case GPS hangs)
+      const location = await withTimeout(
+        Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.High,
+        }),
+        15000,
+        new Error(i18n.t?.('locTimeout') ?? 'Getting location took too long. Try again with a clearer sky view.')
+      );
 
       const { latitude, longitude, altitude, speed } = location.coords;
       const url = `https://maps.google.com/?q=${latitude},${longitude}`;
 
-      // Prepare message: support placeholders in saved default text
-      const kmh = typeof speed === 'number' && !Number.isNaN(speed) ? (speed * 3.6) : null;
+      const kmh =
+        typeof speed === 'number' && !Number.isNaN(speed) ? (speed * 3.6) : undefined;
 
-      const fallbackText =
-        'To je moja lokacija: {url}'; // short fallback if nothing saved
-
+      // 4) Compose message from template (supports {lat}{lon}{url}{alt}{speedKmh})
+      const fallbackText = 'To je moja lokacija: {url}';
       const base = (defaultText || '').trim() || fallbackText;
-      const finalMessage = base ? `${base}\n\n${url}` : url;
 
-      // If user has a favorite, send to that number; otherwise open composer with recipient picker
+      const finalMessage = renderTemplate(base, {
+        lat: toFixedMaybe(latitude, 6),
+        lon: toFixedMaybe(longitude, 6),
+        url,
+        alt: altitude != null ? `${Math.round(altitude)} m` : undefined,
+        speedKmh: kmh != null ? `${kmh.toFixed(1)} km/h` : undefined,
+      }) + `\n\n${url}`;
+
+      // 5) Preferred recipient or let the OS picker open
       const recipients = favorite?.phone ? [favorite.phone] : [];
 
       await SMS.sendSMSAsync(recipients, finalMessage);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error sharing location:', error);
-      setErrorMsg('Something went wrong while sharing your location.');
+      setErrorMsg(error?.message ?? (i18n.t?.('shareError') ?? 'Something went wrong while sharing your location.'));
     } finally {
       setLoading(false);
     }
   };
-
-  // Fallback for instruction text
-  const instructionRaw = i18n.t('shareInstruction') as string;
-  const instruction =
-    instructionRaw === 'shareInstruction'
-      ? 'Press the button to share your current GPS location via SMS.'
-      : instructionRaw;
-
-  const iconColor = '#42A5F5';
 
   return (
     <View style={styles.screen}>
@@ -124,14 +123,14 @@ export default function ShareScreen() {
           <Text style={styles.paragraph}>{instruction}</Text>
 
           {!!favorite?.name && (
-            <Text style={{ opacity: 0.8, marginBottom: 4 }}>
-              📱 Favorite: {favorite.name} {favorite.phone ? `(${favorite.phone})` : ''}
+            <Text style={{ opacity: 0.8, marginTop: 4 }}>
+              📱 {i18n.t?.('favorite') ?? 'Favorite'}: {favorite.name} {favorite.phone ? `(${favorite.phone})` : ''}
             </Text>
           )}
 
           {!!defaultText && (
-            <Text style={{ opacity: 0.7, fontSize: 12, textAlign: 'center' }}>
-              Template preview uses placeholders: {'{lat} {lon} {url} {alt} {speedKmh}'}
+            <Text style={{ opacity: 0.7, fontSize: 12, textAlign: 'center', marginTop: 4 }}>
+              Template placeholders: {'{lat} {lon} {url} {alt} {speedKmh}'}
             </Text>
           )}
 
@@ -171,6 +170,18 @@ function renderTemplate(template: string, data: Record<string, string | undefine
     const v = data[key];
     return v != null ? v : `{${key}}`;
   });
+}
+
+function toFixedMaybe(n: number | undefined, digits = 6) {
+  return typeof n === 'number' && !Number.isNaN(n) ? n.toFixed(digits) : '';
+}
+
+// Promise helper: reject if it takes longer than ms
+async function withTimeout<T>(p: Promise<T>, ms: number, err: Error): Promise<T> {
+  return await Promise.race([
+    p,
+    new Promise<never>((_, reject) => setTimeout(() => reject(err), ms)),
+  ]);
 }
 
 const styles = StyleSheet.create({

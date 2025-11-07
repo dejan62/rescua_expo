@@ -2,23 +2,41 @@ import { Text, View } from '@/components/Themed';
 import { Theme } from '@/constants/Colors';
 import i18n from '@/constants/translations/i18n';
 import { MaterialIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 import * as SMS from 'expo-sms';
 import React, { useState } from 'react';
 import { ActivityIndicator, StyleSheet, useColorScheme } from 'react-native';
 import { Button } from 'react-native-paper';
 
+const KV_SOS_BLOOD_TYPE = 'sos.bloodType'; // e.g. "A+" or missing if unknown
+const KV_SOS_ALLERGIES  = 'sos.allergies';
+const ALLERGIES_MAX = 100; // hard cap
+
 export default function SosScreen() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const colorScheme = useColorScheme();
-  const theme = Theme[colorScheme || 'light']; 
+  const theme = Theme[colorScheme || 'light'];
 
   const shareLocation = async () => {
     try {
       setErrorMsg(null);
       setLoading(true);
+
+      // Ensure SMS is available
+      const smsOk = await SMS.isAvailableAsync();
+      if (!smsOk) {
+        setErrorMsg('SMS is not available on this device.');
+        return;
+      }
+
+      // Read medical info while we ask for permissions to save time
+      const [bt, al] = await Promise.all([
+        AsyncStorage.getItem(KV_SOS_BLOOD_TYPE),
+        AsyncStorage.getItem(KV_SOS_ALLERGIES),
+      ]);
 
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -30,15 +48,27 @@ export default function SosScreen() {
         accuracy: Location.Accuracy.High,
       });
 
-      const url = `https://maps.google.com/?q=${location.coords.latitude},${location.coords.longitude}`;
-      console.log('Generated Google Maps URL:', url.length);
-     
+      const lat = location.coords.latitude;
+      const lon = location.coords.longitude;
+      const url = `https://maps.google.com/?q=${lat},${lon}`;
+
+      // Compose medical details
+      const bloodTypePart =
+        bt && /^[OAB]{1,2}[+-]$/.test(bt) ? `\nKrvna skupina: ${bt}` : '\nKrvna skupina: neznano';
+      const allergiesRaw = (al ?? '').trim();
+      const allergiesPart =
+        allergiesRaw.length > 0
+          ? `\nAlergije: ${allergiesRaw.slice(0, ALLERGIES_MAX)}`
+          : '';
+
+      const message =
+        `NUJNO POTREBUJEM POMOČ.\n` +
+        `Sem na lokaciji (GPS): ${lat.toFixed(6)}, ${lon.toFixed(6)}${bloodTypePart}${allergiesPart}\n\n${url}`;
 
       await SMS.sendSMSAsync(
-        ['041565455'],
-        `NUJNO POTREBUJEM POMOČ, sem na lokaciji - GPS koordinate = ${location.coords.latitude},${location.coords.longitude}.\n\n${url}`
+        ['041565455'], // your emergency number(s)
+        message
       );
-
     } catch (error) {
       console.error('Error sharing location:', error);
       setErrorMsg('Something went wrong while sharing your location.');
@@ -46,7 +76,6 @@ export default function SosScreen() {
       setLoading(false);
     }
   };
-
 
   return (
     <View style={styles.screen}>
@@ -80,7 +109,6 @@ export default function SosScreen() {
         </View>
       </View>
 
-      {/* Full-screen loader overlay */}
       {loading && (
         <View style={styles.loaderOverlay}>
           <View style={styles.loaderBox}>
@@ -108,7 +136,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderRadius: 999,
     padding: 12,
-    backgroundColor: 'rgba(229, 57, 53, 0.12)', // subtle red halo
+    backgroundColor: 'rgba(229, 57, 53, 0.12)',
   },
   title: {
     fontSize: 26,
@@ -126,8 +154,8 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 12,
     alignItems: 'center',
-    elevation: 3, // Android shadow
-    shadowColor: '#000', // iOS shadow
+    elevation: 3,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 10,
@@ -158,8 +186,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
   },
-
-  // Loader overlay
   loaderOverlay: {
     ...StyleSheet.absoluteFillObject,
     alignItems: 'center',
