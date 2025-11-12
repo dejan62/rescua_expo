@@ -17,6 +17,7 @@ const i18n = new I18n({
     hiking: 'Hiking',
     etiquette: 'Etiquette',
     usefulLinks: 'Useful Links',
+    mapzs:'maPZS'
   },
   de: {
     hello: 'Hallo',
@@ -33,6 +34,7 @@ const i18n = new I18n({
     hiking: 'Wandern',
     etiquette: 'Etikette',
     usefulLinks: 'Nützliche Links',
+    mapzs:'maPZS'
   },
   sl: {
     hello: 'Živjo',
@@ -48,7 +50,8 @@ const i18n = new I18n({
     firstAid: 'Prva pomoč',
     hiking: 'Pohodništvo',
     etiquette: 'Bonton',
-    usefulLinks: 'Koristne povezave'
+    usefulLinks: 'Koristne povezave',
+    mapzs:'maPZS'
   },
   cs: {
     hello: 'Ahoj',
@@ -65,6 +68,7 @@ const i18n = new I18n({
     hiking: 'Turistika',
     etiquette: 'Etiketa',
     usefulLinks: 'Užitečné odkazy',
+    mapzs:'maPZS'
   },
   pl: {
     hello: 'Cześć',
@@ -81,6 +85,7 @@ const i18n = new I18n({
     hiking: 'Wędrówki',
     etiquette: 'Etykieta',
     usefulLinks: 'Przydatne linki',
+    mapzs:'maPZS'
   },
   it: {
     hello: 'Ciao',
@@ -97,6 +102,7 @@ const i18n = new I18n({
     hiking: 'Escursionismo',
     etiquette: 'Galateo',
     usefulLinks: 'Link utili',
+    mapzs:'maPZS'
   },
   fr: {
     hello: 'Bonjour',
@@ -113,6 +119,7 @@ const i18n = new I18n({
     hiking: 'Randonnée',
     etiquette: 'Étiquette',
     usefulLinks: 'Liens utiles',
+    mapzs:'maPZS'
   },
   hu: {
     hello: 'Szia',
@@ -129,6 +136,7 @@ const i18n = new I18n({
     hiking: 'Túrázás',
     etiquette: 'Etikett',
     usefulLinks: 'Hasznos hivatkozások',
+    mapzs:'maPZS'
   },
   hr: {
     hello: 'Bok',
@@ -145,6 +153,7 @@ const i18n = new I18n({
     hiking: 'Planinarenje',
     etiquette: 'Bonton',
     usefulLinks: 'Korisne poveznice',
+    mapzs:'maPZS'
   },
   sr: {
     hello: 'Zdravo',
@@ -161,6 +170,7 @@ const i18n = new I18n({
     hiking: 'Planinarenje',
     etiquette: 'Bonton',
     usefulLinks: 'Korisni linkovi',
+    mapzs:'maPZS'
   },
 });
 

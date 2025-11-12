@@ -1,4 +1,3 @@
-import { Text, View } from '@/components/Themed';
 import { Theme } from '@/constants/Colors';
 import i18n from '@/constants/translations/i18n';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -7,8 +6,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import * as SMS from 'expo-sms';
 import React, { useMemo, useState } from 'react';
-import { ActivityIndicator, StyleSheet, useColorScheme } from 'react-native';
-import { Button } from 'react-native-paper';
+import { ActivityIndicator, StyleSheet, useColorScheme, View } from 'react-native';
+import { Button, Card, Text } from 'react-native-paper';
 
 type FavContact = { id?: string; name?: string; phone?: string };
 
@@ -103,7 +102,7 @@ export default function ShareScreen() {
 
       await SMS.sendSMSAsync(recipients, finalMessage);
     } catch (error: any) {
-      console.error('Error sharing location:', error);
+      //console.error('Error sharing location:', error);
       setErrorMsg(error?.message ?? (i18n.t?.('shareError') ?? 'Something went wrong while sharing your location.'));
     } finally {
       setLoading(false);
@@ -111,57 +110,58 @@ export default function ShareScreen() {
   };
 
   return (
-    <View style={styles.screen}>
-      <View style={styles.container}>
-        <View style={styles.iconWrap}>
-          <MaterialIcons name="share-location" size={64} color={iconColor} />
-        </View>
-
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-
-        <View style={styles.card}>
-          <Text style={styles.paragraph}>{instruction}</Text>
-
-          {!!favorite?.name && (
-            <Text style={{ opacity: 0.8, marginTop: 4 }}>
-              📱 {i18n.t?.('favorite') ?? 'Favorite'}: {favorite.name} {favorite.phone ? `(${favorite.phone})` : ''}
-            </Text>
-          )}
-
-          {!!defaultText && (
-            <Text style={{ opacity: 0.7, fontSize: 12, textAlign: 'center', marginTop: 4 }}>
-              Template placeholders: {'{lat} {lon} {url} {alt} {speedKmh}'}
-            </Text>
-          )}
-
-          {!!errorMsg && <Text style={styles.errorText}>{errorMsg}</Text>}
-
-          <Button
-            mode="contained"
-            icon="map-marker"
-            onPress={shareLocation}
-            loading={loading}
-            disabled={loading}
-            style={styles.ctaButton}
-            contentStyle={styles.ctaContent}
-            labelStyle={styles.ctaLabel}
-            buttonColor={theme.colors.primary}
-          >
-            {i18n.t('shareLocation')}
-          </Button>
-        </View>
+  <View style={styles.screen}>
+    <View style={styles.container}>
+      <View style={styles.iconWrap}>
+        <MaterialIcons name="share-location" size={64} color={iconColor} />
       </View>
 
-      {loading && (
-        <View style={styles.loaderOverlay}>
-          <View style={styles.loaderBox}>
-            <ActivityIndicator size="large" color={iconColor} />
-            <Text style={styles.loadingText}>{i18n.t('gettingLocation')}</Text>
-          </View>
-        </View>
-      )}
+      <View style={styles.separator} />
+
+      {/* Intro card */}
+<Card
+  mode="elevated"
+  style={[
+    styles.card,
+    { backgroundColor: theme.colors.surface, overflow: 'hidden' }, // clip inside corners
+  ]}
+>
+  <Card.Content style={{ gap: 12, alignItems: 'center', alignSelf: 'stretch' }}>
+    <Text variant="bodyLarge" style={styles.paragraph}>{instruction}</Text>
+
+    {!!errorMsg && (
+      <Text style={[styles.errorText, { alignSelf: 'stretch', color: theme.colors.error, backgroundColor: theme.colors.errorContainer }]}>
+        {errorMsg}
+      </Text>
+    )}
+
+    <Button
+      mode="contained"
+      icon="map-marker"
+      onPress={shareLocation}
+      loading={loading}
+      disabled={loading}
+      style={styles.ctaButton}
+      contentStyle={styles.ctaContent}
+      labelStyle={styles.ctaLabel}
+      buttonColor={theme.colors.primary}
+    >
+      {i18n.t('shareLocation')}
+    </Button>
+  </Card.Content>
+</Card>
     </View>
-  );
+
+    {loading && (
+      <View style={styles.loaderOverlay}>
+        <View style={styles.loaderBox}>
+          <ActivityIndicator size="large" color={iconColor} />
+          <Text style={styles.loadingText}>{i18n.t('gettingLocation')}</Text>
+        </View>
+      </View>
+    )}
+  </View>
+);
 }
 
 /** Replace {lat},{lon},{url},{alt},{speedKmh} in template. Unknown placeholders remain unchanged. */
@@ -209,14 +209,6 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     borderRadius: 16,
-    padding: 16,
-    gap: 12,
-    alignItems: 'center',
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
   },
   paragraph: {
     textAlign: 'center',
@@ -225,13 +217,11 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   errorText: {
-    width: '100%',
+    // width: '100%',  ← delete; use alignSelf: 'stretch' above
     textAlign: 'center',
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 8,
-    backgroundColor: 'rgba(229,57,53,0.12)',
-    color: '#ff6b6b',
   },
   ctaButton: {
     borderRadius: 14,

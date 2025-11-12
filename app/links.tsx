@@ -18,29 +18,6 @@ type LinkSection = {
 
 const SECTIONS: LinkSection[] = [
   {
-    header: 'Mountain Safety',
-    items: [
-      {
-        title: 'GRZS',
-        description: 'Gorska Reševalna Zveza Slovenije',
-        url: 'https://www.grzs.si/',
-        icon: 'helicopter',
-      },
-      {
-        title: 'PZS',
-        description: 'Planinska Zveza Slovenije',
-        url: 'https://pzs.si/',
-        icon: 'hiking',
-      },
-      {
-        title: 'Policija',
-        description: '',
-        url: 'https://www.policija.si/',
-        icon: 'police-station',
-      },
-    ],
-  },
-  {
     header: 'Vreme',
     items: [
       {
@@ -57,6 +34,36 @@ const SECTIONS: LinkSection[] = [
       },
     ],
   },
+    {
+    header: 'Zemljevid in navigacija',
+    items: [
+      {
+        title: 'maPZS',
+        description: 'Uradni zemljevid planinske zveze Slovenije',
+        url: 'https://mapzs.pzs.si/home/trails',
+        icon: 'map',
+      },
+    ],
+  },
+  {
+    header: 'Mountain Safety',
+    items: [
+       {
+        title: 'PZS',
+        description: 'Planinska Zveza Slovenije - Postani član tudi ti!',
+        url: 'https://pzs.si/',
+        icon: 'hiking',
+      },
+      {
+        title: 'GRZS',
+        description: 'Gorska Reševalna Zveza Slovenije - Postanite podpornik',
+        url: 'https://www.grzs.si/postani-podpornik/',
+        icon: 'helicopter',
+      },
+     
+    ],
+  },
+
   {
     header: 'Prva pomoč',
     items: [

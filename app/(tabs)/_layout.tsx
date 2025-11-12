@@ -35,7 +35,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "RESCUA",
+          title: "RESCUA.eu - vaša senca varnosti",
+          headerTitleStyle: { fontSize: 16 },
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 8 }}>
@@ -55,42 +56,23 @@ export default function TabLayout() {
                     />
                   )}
                 </Pressable>
-            </Link>              
-            <Link href="/linksExample" asChild>
+            </Link>   
+            <Link href="/hiking" asChild>
                 <Pressable
                   accessibilityRole="button"
-                  accessibilityLabel="Settings"
                   hitSlop={10}
                   android_ripple={{ radius: 20 }}
                   style={{ paddingHorizontal: 8, paddingVertical: 4 }}
                 >
                   {({ pressed }) => (
                     <TabBarIcon
-                      name="add-link"
+                      name="hiking"
                       color={Colors[colorScheme ?? 'light'].text}
                       style={{ opacity: pressed ? 0.5 : 1 }}
                     />
                   )}
                 </Pressable>
-            </Link>
-            
-            <Link href="/login" asChild>
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel="Login"
-                hitSlop={10}
-                android_ripple={{ radius: 20 }}
-                style={{ paddingHorizontal: 8, paddingVertical: 4 }}
-              >
-                {({ pressed }) => (
-                  <TabBarIcon
-                    name="login"
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 6, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+            </Link>              
           </View>
           ),
         }}
@@ -118,7 +100,40 @@ export default function TabLayout() {
                     />
                   )}
                 </Pressable>
-            </Link>         
+            </Link>
+            <Link href="/links" asChild>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="Settings"
+                  hitSlop={10}
+                  android_ripple={{ radius: 20 }}
+                  style={{ paddingHorizontal: 8, paddingVertical: 4 }}
+                >
+                  {({ pressed }) => (
+                    <TabBarIcon
+                      name="link"
+                      color={Colors[colorScheme ?? 'light'].text}
+                      style={{ opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+            </Link>   
+            <Link href="/hiking" asChild>
+                <Pressable
+                  accessibilityRole="button"
+                  hitSlop={10}
+                  android_ripple={{ radius: 20 }}
+                  style={{ paddingHorizontal: 8, paddingVertical: 4 }}
+                >
+                  {({ pressed }) => (
+                    <TabBarIcon
+                      name="hiking"
+                      color={Colors[colorScheme ?? 'light'].text}
+                      style={{ opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+            </Link>           
           </View>
           ),
         }}
@@ -146,23 +161,130 @@ export default function TabLayout() {
                     />
                   )}
                 </Pressable>
-            </Link>         
+            </Link>
+            <Link href="/links" asChild>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="Settings"
+                  hitSlop={10}
+                  android_ripple={{ radius: 20 }}
+                  style={{ paddingHorizontal: 8, paddingVertical: 4 }}
+                >
+                  {({ pressed }) => (
+                    <TabBarIcon
+                      name="link"
+                      color={Colors[colorScheme ?? 'light'].text}
+                      style={{ opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+            </Link>   
+            <Link href="/hiking" asChild>
+                <Pressable
+                  accessibilityRole="button"
+                  hitSlop={10}
+                  android_ripple={{ radius: 20 }}
+                  style={{ paddingHorizontal: 8, paddingVertical: 4 }}
+                >
+                  {({ pressed }) => (
+                    <TabBarIcon
+                      name="hiking"
+                      color={Colors[colorScheme ?? 'light'].text}
+                      style={{ opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+            </Link>           
           </View>
           ),
         }}
       />
       <Tabs.Screen
-        name="hiking"
+        name="mapzs"
         options={{
-          title: i18n.t('etiquette'),
-          tabBarIcon: ({ color }) => <TabBarIcon name="hiking" color={color} />
+          title: i18n.t('mapzs'),
+          tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
+          headerRight: () => (
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 8 }}>
+              <Link href="/links" asChild>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="Settings"
+                  hitSlop={10}
+                  android_ripple={{ radius: 20 }}
+                  style={{ paddingHorizontal: 8, paddingVertical: 4 }}
+                >
+                  {({ pressed }) => (
+                    <TabBarIcon
+                      name="link"
+                      color={Colors[colorScheme ?? 'light'].text}
+                      style={{ opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>   
+              <Link href="/hiking" asChild>
+                <Pressable
+                  accessibilityRole="button"
+                  hitSlop={10}
+                  android_ripple={{ radius: 20 }}
+                  style={{ paddingHorizontal: 8, paddingVertical: 4 }}
+                >
+                  {({ pressed }) => (
+                    <TabBarIcon
+                      name="hiking"
+                      color={Colors[colorScheme ?? 'light'].text}
+                      style={{ opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>           
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
         name="firstaid"
         options={{
           title: i18n.t('firstAid'),
-          tabBarIcon: ({ color }) => <TabBarIcon name="add-moderator" color={color} />
+          tabBarIcon: ({ color }) => <TabBarIcon name="add-moderator" color={color} />,
+          headerRight: () => (
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 8 }}>
+              <Link href="/links" asChild>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="Settings"
+                  hitSlop={10}
+                  android_ripple={{ radius: 20 }}
+                  style={{ paddingHorizontal: 8, paddingVertical: 4 }}
+                >
+                  {({ pressed }) => (
+                    <TabBarIcon
+                      name="link"
+                      color={Colors[colorScheme ?? 'light'].text}
+                      style={{ opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>   
+              <Link href="/hiking" asChild>
+                <Pressable
+                  accessibilityRole="button"
+                  hitSlop={10}
+                  android_ripple={{ radius: 20 }}
+                  style={{ paddingHorizontal: 8, paddingVertical: 4 }}
+                >
+                  {({ pressed }) => (
+                    <TabBarIcon
+                      name="hiking"
+                      color={Colors[colorScheme ?? 'light'].text}
+                      style={{ opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>           
+            </View>
+          ),
         }}
       />
     </Tabs>

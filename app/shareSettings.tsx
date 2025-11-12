@@ -1,19 +1,20 @@
 // app/(tabs)/shareSettings.tsx
+import { Theme } from '@/constants/Colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Contacts from 'expo-contacts';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Card, HelperText, PaperProvider, Snackbar, TextInput } from 'react-native-paper';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, useColorScheme } from 'react-native';
+import { Card, HelperText, Snackbar, TextInput } from 'react-native-paper';
 
 const KV_DEFAULT_TEXT = 'share.defaultText';
 
 export default function ShareSettingsScreen() {
   const [defaultText, setDefaultText] = React.useState('');
-
-  // Contact picker state
-  const [q, setQ] = React.useState('');
   const [snack, setSnack] = React.useState<string | null>(null);
 
+  const colorScheme = useColorScheme();
+  const theme = Theme[colorScheme || 'light'];
+
+  const CHAR_MAX = 100;
   // Load persisted settings
   React.useEffect(() => {
     (async () => {
@@ -27,56 +28,60 @@ export default function ShareSettingsScreen() {
   // Persist default text (debounced)
   React.useEffect(() => {
     const id = setTimeout(() => {
-      AsyncStorage.setItem(KV_DEFAULT_TEXT, defaultText).catch(() => {});
+      AsyncStorage.setItem(KV_DEFAULT_TEXT, defaultText).catch(() => { });
     }, 400);
     return () => clearTimeout(id);
   }, [defaultText]);
 
-  const openPicker = async () => {
-    // Ask permission lazily
-    const { status } = await Contacts.requestPermissionsAsync();
-    if (status !== Contacts.PermissionStatus.GRANTED) {
-      setSnack('Contacts permission denied.');
-      return;
-    }
-
-  };
-
-
   return (
-    <PaperProvider>
-    <View style={styles.container}>
-      {/* DEFAULT SHARE TEXT */}
-      <Card mode="elevated" style={styles.card}>
-        <Card.Title title="Default share message" titleVariant="titleMedium" />
-        <Card.Content>
-          <TextInput
-            mode="outlined"
-            multiline
-            numberOfLines={4}
-            value={defaultText}
-            onChangeText={setDefaultText}
-            placeholder="e.g. I'm here and need assistance. GPS: {lat},{lon}"
-            right={<TextInput.Affix text={`${defaultText.length}/500`} />}
-            maxLength={500}
-          />
-          <HelperText type="info" style={{ marginTop: 6 }}>
-            This text will be pre-filled when you share your location.
-          </HelperText>
-        </Card.Content>
-      </Card>
-  
-
-      <Snackbar visible={!!snack} onDismiss={() => setSnack(null)} duration={2000}>
-        {snack}
-      </Snackbar>
-    </View>
-    </PaperProvider>
+      <KeyboardAvoidingView
+        style={{ flex: 1, backgroundColor: theme.colors.background }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.select({ ios: 0, android: 50 })}
+      >
+        <ScrollView
+          contentContainerStyle={[styles.scroll]}
+          keyboardShouldPersistTaps="handled"
+          style={{ backgroundColor: theme.colors.background }}
+        >
+          {/* DEFAULT SHARE TEXT */}
+          <Card mode="elevated" style={[styles.card, { backgroundColor: theme.colors.surface }]}>
+            <Card.Title title="Default share message" titleVariant="titleMedium" />
+            <Card.Content>
+              <TextInput
+                mode="outlined"
+                multiline
+                numberOfLines={4}
+                value={defaultText}
+                onChangeText={setDefaultText}
+                placeholder="e.g. Hi, this is my location. GPS: "
+                right={<TextInput.Affix text={`${defaultText.length}/${CHAR_MAX}`} />}
+                maxLength={CHAR_MAX}
+                textColor={theme.colors.onSurface}
+                outlineColor={theme.colors.outline}          // unfocused
+                activeOutlineColor={theme.colors.primary}     // focused
+                style={{ backgroundColor: theme.colors.surface,  }}
+              />
+              <HelperText type="info" style={[{ marginTop: 6 , color: theme.colors.onSurfaceVariant }]}>
+                This text will be pre-filled when you share your location.
+              </HelperText>
+            </Card.Content>
+          </Card>
+          <Snackbar visible={!!snack} onDismiss={() => setSnack(null)} duration={2000}>
+            {snack}
+          </Snackbar>
+        </ScrollView>
+      </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, gap: 16 },
+  scroll: {
+    flexGrow: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    gap: 16
+  },
   card: { width: '100%' },
   pickerSheet: {
     position: 'absolute',

@@ -1,9 +1,10 @@
 // app/(tabs)/index.tsx (or HomeScreen.tsx)
+import { Theme } from '@/constants/Colors';
 import { useElevation } from '@/hooks/useElevation'; // ← add
 import { useOpenMeteo } from '@/hooks/useOpenMeteo';
 import * as Location from 'expo-location';
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View, useColorScheme } from 'react-native';
 import { ActivityIndicator, Button, Card, SegmentedButtons, Text } from 'react-native-paper';
 
 type Coords = {
@@ -22,6 +23,9 @@ export default function HomeScreen() {
   const [error, setError] = React.useState<string | null>(null);
   const [watching, setWatching] = React.useState(true);
   const [tab, setTab] = React.useState<'pos' | 'wx'>('pos'); // ← toggle state
+
+  const colorScheme = useColorScheme();
+  const theme = Theme[colorScheme || 'light'];
 
   const { weather, loading: wLoading, error: wError } = useOpenMeteo(coords.latitude, coords.longitude);
   const { elevation, loading: eLoading, error: eError } = useElevation(coords.latitude, coords.longitude); // ← add
@@ -74,7 +78,7 @@ export default function HomeScreen() {
     setWatching((w) => !w);
     if (watching) {
       // stop
-      await Location.stopLocationUpdatesAsync?.('unused-task-name').catch(() => {});
+      await Location.stopLocationUpdatesAsync?.('unused-task-name').catch(() => { });
     } else {
       // resume (quick poll once)
       try {
@@ -89,7 +93,7 @@ export default function HomeScreen() {
           accuracy: c.accuracy,
           altitudeAccuracy: c.altitudeAccuracy,
         });
-      } catch {}
+      } catch { }
     }
   };
 
@@ -115,15 +119,35 @@ export default function HomeScreen() {
         value={tab}
         onValueChange={(v) => setTab(v as 'pos' | 'wx')}
         buttons={[
-          { value: 'pos', label: 'Position', icon: 'crosshairs-gps' },
-          { value: 'wx', label: 'Weather', icon: 'weather-partly-cloudy' },
+          {
+            value: 'pos',
+            label: 'Position',
+            icon: 'crosshairs-gps',
+            checkedColor: theme.colors.onPrimary,                  // selected text/icon
+            uncheckedColor: theme.colors.onSurface,   // unselected text/icon
+            style: [
+              tab === 'pos' && { backgroundColor: theme.colors.primary }, // selected bg
+            ],
+            labelStyle: tab === 'pos' ? { fontWeight: '700' } : undefined,
+          },
+          {
+            value: 'wx',
+            label: 'Weather',
+            icon: 'weather-partly-cloudy',
+            checkedColor: theme.colors.onPrimary,   // selected text/icon
+            uncheckedColor: theme.colors.onSurface,   // unselected text/icon
+            style: [
+              tab === 'wx' && { backgroundColor: theme.colors.primary }, // selected bg
+            ],
+            labelStyle: tab === 'wx' ? { fontWeight: '700' } : undefined,
+          },
         ]}
         style={{ width: '100%', maxWidth: 560 }}
       />
 
       {/* POSITION CARD */}
       {tab === 'pos' && (
-        <Card mode="elevated" style={styles.card}>
+        <Card mode="elevated" style={[styles.card, { backgroundColor: theme.colors.surface }]}>
           <Card.Title title="Current Position" titleVariant="titleMedium" />
           <Card.Content style={{ gap: 8 }}>
             {status === 'loading' && (
@@ -144,22 +168,30 @@ export default function HomeScreen() {
               label="Elevation (MSL)"
               value={
                 eLoading ? '…' :
-                eError ? '—' :
-                elevation != null ? `${Math.round(elevation)} m` : '—'
+                  eError ? '—' :
+                    elevation != null ? `${Math.round(elevation)} m` : '—'
               }
             />
 
             {/* Keep raw GPS altitude but label it clearly */}
-            <StatRow
+            {/*<StatRow
               label="Altitude (GPS ellipsoid)"
               value={coords.altitude != null ? `${Math.round(coords.altitude)} m` : '—'}
-            />
+            />*/}
 
             <StatRow label="Heading" value={headingText} />
             <StatRow label="Speed" value={kmh != null ? `${kmh.toFixed(1)} km/h` : '—'} />
           </Card.Content>
           <Card.Actions>
-            <Button onPress={toggleWatching}>{watching ? 'Pause' : 'Refresh once'}</Button>
+            {/* Solid primary button */}
+            <Button
+              mode="contained"
+              onPress={toggleWatching}
+              buttonColor={theme.colors.primary}
+              textColor={theme.colors.onPrimary}
+            >
+              {watching ? 'Pause' : 'Refresh once'}
+            </Button>
           </Card.Actions>
         </Card>
       )}
@@ -228,7 +260,7 @@ function fmt(n?: number | null, digits = 6) {
 
 function toCardinal(deg?: number | null) {
   if (deg == null || Number.isNaN(deg)) return '';
-  const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW','N'];
+  const dirs = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW', 'N'];
   return dirs[Math.round((deg % 360) / 22.5)];
 }
 

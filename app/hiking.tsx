@@ -1,11 +1,13 @@
 // app/(tabs)/hiking.tsx (example path)
+import { Theme } from '@/constants/Colors';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { Card, Divider, List, Text, useTheme } from 'react-native-paper';
+import { ScrollView, StyleSheet, View, useColorScheme } from 'react-native';
+import { Card, Divider, List, Text } from 'react-native-paper';
 
 export default function HikingScreen() {
-  const theme = useTheme();
+  const colorScheme = useColorScheme();
+  const theme = Theme[colorScheme || 'light']; 
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -15,19 +17,19 @@ export default function HikingScreen() {
       </View>
 
       {/* Title */}
-      <Text variant="headlineMedium" style={styles.center}>
+      <Text variant="headlineMedium" style={[styles.center,{color: theme.colors.onSurface}]}>
         KODEKS PLANINCA: Zlata pravila
       </Text>
-      <Text variant="titleSmall" style={[styles.center, { opacity: 0.8, marginTop: 4 }]}>
-        za naravovarstvenike in pohodnike
+      <Text variant="titleSmall" style={[styles.center, { opacity: 0.8, marginTop: 4, color: theme.colors.onSurface }]}>
+        za pohodnike in vse outdoor navdušence
       </Text>
 
-      <Divider style={{ marginVertical: 16, width: '70%' }} />
+      <Divider style={{ marginVertical: 16, width: '80%' }} />
 
       {/* Intro card */}
-      <Card mode="elevated" style={styles.card}>
+      <Card mode="elevated" style={[styles.card,{ backgroundColor: theme.colors.surface}]}>
         <Card.Content>
-          <Text variant="bodyLarge">
+          <Text variant="bodyLarge" style={{ color: theme.colors.onSurface }}>
             Gore so naš skupni dom in navdih. Bonton v njih ni zgolj vljudnost, ampak
             odgovornost in tovarištvo, ki zagotavljata varnost vseh in ohranjata neokrnjeno naravo.
             Tole je naš neformalni dogovor za srečen in varen korak:
@@ -108,9 +110,9 @@ export default function HikingScreen() {
       />
 
       {/* Outro */}
-      <Card mode="elevated" style={[styles.card, { marginTop: 20, marginBottom: 32 }]}>
+      <Card mode="elevated" style={[styles.card, { marginTop: 20, marginBottom: 32, backgroundColor: theme.colors.surface}]}>
         <Card.Content>
-          <Text variant="bodyLarge" style={{ fontStyle: 'italic' }}>
+          <Text variant="bodyLarge" style={{ fontStyle: 'italic', color: theme.colors.onSurface }}>
             Zaključek: V hribih ne tekmujemo. Skupaj smo in drug drugemu čuvamo hrbet.
             Dober planinec je tisti, ki se vrne varno domov, za seboj pa pusti le nasmeh
             in spoštovanje do narave. Srečno in varen korak!
@@ -133,13 +135,15 @@ function Section({
   intro?: string;
   bullets?: string[];
 }) {
+  const colorScheme = useColorScheme();
+  const theme = Theme[colorScheme || 'light'];
   return (
-      <Card mode="elevated" style={styles.section}>
+      <Card mode="elevated" style={[styles.section,{ backgroundColor: theme.colors.surface}]}>
         <Card.Content style={{ paddingBottom: 0 }}>
           {/* Smaller + wraps to two lines */}
           <Text
             variant="titleMedium"
-            style={{ fontWeight: '700' }}
+            style={{ fontWeight: '700', color: theme.colors.onSurface }}
             numberOfLines={2}
           >
             {number}. {title}
@@ -147,13 +151,14 @@ function Section({
         </Card.Content>
 
         <Card.Content style={{ gap: 8, paddingTop: 8 }}>
-          {intro ? <Text variant="bodyLarge">{intro}</Text> : null}
+          {intro ? <Text variant="bodyLarge" style={{color: theme.colors.onSurface}}>{intro}</Text> : null}
           {bullets?.map((b, i) => (
             <List.Item
               key={i}
               title={b}
               titleNumberOfLines={6}
-              left={props => <List.Icon {...props} icon="circle-small" />}
+              left={props => <List.Icon {...props} icon="circle-small"  color={theme.colors.primary} />}
+              titleStyle={{ color: theme.colors.onSurface }}
             />
           ))}
         </Card.Content>

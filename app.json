@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "RESCUA",
-    "slug": "Rescua",
-    "version": "0.9.0",
+    "name": "RESCUA rescuapp",
+    "slug": "rescuapp",
+    "version": "0.9.1",
     "orientation": "portrait",
     "icon": "./assets/images/LOGO_BLUE_SQUARE.png",
-    "scheme": "com.rescua",
+    "scheme": "rescuapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -14,14 +14,20 @@
       "backgroundColor": "#000000"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rescua.rescuapp",
+      "buildNumber": "9",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Allow Rescuapp to use your location for navigation and emergency features.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow Rescuapp to use your location for emergency features."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/LOGO_BLUE_SQUARE.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.rescua",
+      "package": "com.rescua.rescuapp",
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "softwareKeyboardLayoutMode": "resize",
@@ -67,7 +73,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "88b6208c-c9b4-4135-b401-8d8b4a8f83a0"
+        "projectId": "86d097b5-61ee-46c1-b168-45912f7e424c"
       }
     }
   }

@@ -1,4 +1,3 @@
-import { Text, View } from '@/components/Themed';
 import { Theme } from '@/constants/Colors';
 import i18n from '@/constants/translations/i18n';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -6,11 +5,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 import * as SMS from 'expo-sms';
 import React, { useState } from 'react';
-import { ActivityIndicator, StyleSheet, useColorScheme } from 'react-native';
-import { Button } from 'react-native-paper';
+import { ActivityIndicator, StyleSheet, useColorScheme, View } from 'react-native';
+import { Button, Card, Text } from 'react-native-paper';
 
 const KV_SOS_BLOOD_TYPE = 'sos.bloodType'; // e.g. "A+" or missing if unknown
-const KV_SOS_ALLERGIES  = 'sos.allergies';
+const KV_SOS_ALLERGIES = 'sos.allergies';
 const ALLERGIES_MAX = 100; // hard cap
 
 export default function SosScreen() {
@@ -69,9 +68,9 @@ export default function SosScreen() {
         ['041565455'], // your emergency number(s)
         message
       );
-    } catch (error) {
-      console.error('Error sharing location:', error);
-      setErrorMsg('Something went wrong while sharing your location.');
+    } catch (error: any) {
+      //console.error('Error sharing location:', error);
+      setErrorMsg(error?.message  ?? 'Something went wrong while sharing your location.');
     } finally {
       setLoading(false);
     }
@@ -84,29 +83,49 @@ export default function SosScreen() {
           <MaterialIcons name="sos" size={64} color="#E53935" />
         </View>
 
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+        <View style={styles.separator} />
 
-        <View style={styles.card}>
-          <Text style={styles.paragraph}>
-            {i18n.t('sosInstruction')}
-          </Text>
+        {/* Intro/Action card */}
+        <Card mode="elevated" style={[styles.card, { backgroundColor: theme.colors.surface }]}>
+          <Card.Content style={styles.cardContent}>
+            <Text variant="bodyLarge" style={styles.paragraph}>
+              {i18n.t('sosInstruction')}
+            </Text>
 
-          {!!errorMsg && <Text style={styles.errorText}>{errorMsg}</Text>}
+            {/* BIG WARNING */}
+            <View
+              style={styles.warningBox}
+              accessibilityRole="alert"
+              accessibilityLabel="Warning"
+            >
+              <MaterialIcons name="warning" size={28} color={theme.colors.error} />
+              <Text style={[styles.warningText, { color: theme.colors.error }]}>
+                OPOZORILO: to SMS sporočilo bo poslano uradnemu reševalnemu centru. Po poslanem sporočilu
+                ostanite na lokaciji in počakajte na pomoč.
+              </Text>
+            </View>
 
-          <Button
-            mode="contained"
-            icon="map-marker"
-            onPress={shareLocation}
-            loading={loading}
-            disabled={loading}
-            style={styles.ctaButton}
-            contentStyle={styles.ctaContent}
-            labelStyle={styles.ctaLabel}
-            buttonColor={theme.colors.error}
-          >
-            SOS
-          </Button>
-        </View>
+            {!!errorMsg && (
+              <Text style={[styles.errorText, { alignSelf: 'stretch', color: theme.colors.error, backgroundColor: theme.colors.errorContainer }]}>
+                {errorMsg}
+              </Text>
+            )}
+
+            <Button
+              mode="contained"
+              icon="map-marker"
+              onPress={shareLocation}
+              loading={loading}
+              disabled={loading}
+              style={styles.ctaButton}
+              contentStyle={styles.ctaContent}
+              labelStyle={styles.ctaLabel}
+              buttonColor={theme.colors.error}
+            >
+              SOS
+            </Button>
+          </Card.Content>
+        </Card>
       </View>
 
       {loading && (
@@ -133,7 +152,8 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   iconWrap: {
-    marginBottom: 8,
+    // marginBottom: 8,   // remove extra space here
+    marginBottom: 0,
     borderRadius: 999,
     padding: 12,
     backgroundColor: 'rgba(229, 57, 53, 0.12)',
@@ -144,7 +164,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   separator: {
-    marginVertical: 16,
+    marginVertical: 8,    // was 16; brings card closer to icon
     height: 1,
     width: '70%',
   },
@@ -153,31 +173,26 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     gap: 12,
-    alignItems: 'center',
+    // alignItems removed here so it doesn't affect Card.Content layout
+    // alignItems: 'center',
     elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 10,
   },
-  paragraph: {
+  graph: {
     textAlign: 'center',
     lineHeight: 20,
     fontSize: 16,
     opacity: 0.9,
   },
   errorText: {
-    width: '100%',
+    // width: '100%',  ← delete; use alignSelf: 'stretch' above
     textAlign: 'center',
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 8,
-    backgroundColor: 'rgba(229,57,53,0.12)',
-    color: '#ff6b6b',
-  },
-  ctaButton: {
-    borderRadius: 14,
-    width: '80%',
   },
   ctaContent: {
     height: 56,
@@ -204,5 +219,39 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     fontWeight: '600',
+  },
+  warningBox: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 14,
+    borderRadius: 12,
+    backgroundColor: 'rgba(183, 28, 28, 0.12)', // deep red tint
+    borderWidth: 1,
+    borderColor: 'rgba(183, 28, 28, 0.35)',
+  },
+  warningText: {
+    flex: 1,
+    fontSize: 18,            // big text
+    fontWeight: '800',
+
+    lineHeight: 24,
+  },
+  cardContent: {
+    gap: 12,
+    alignItems: 'center',  // centers children inside the card
+  },
+  ctaButton: {
+    borderRadius: 14,
+    width: '80%',
+    alignSelf: 'center',   // ensures the button itself is centered
+  },
+  paragraph: {
+    textAlign: 'center',
+    lineHeight: 20,
+    fontSize: 16,
+    opacity: 0.9,
   },
 });
