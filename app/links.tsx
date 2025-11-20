@@ -75,6 +75,30 @@ const SECTIONS: LinkSection[] = [
       }
     ],
   },
+
+  {
+    header: 'Rescua',
+    items: [
+      {
+        title: 'Web site',
+        description: '',
+        url: 'https://rescua.eu/',
+        icon: 'web',
+      },
+      {
+        title: 'Facebook',
+        description: '',
+        url: 'https://www.facebook.com/profile.php?id=61575157494455',
+        icon: 'facebook',
+      },
+      {
+        title: 'LinkedIn',
+        description: '',
+        url: 'https://www.linkedin.com/company/rescua-eu/',
+        icon: 'linkedin',
+      },
+    ],
+  },
 ];
 
 

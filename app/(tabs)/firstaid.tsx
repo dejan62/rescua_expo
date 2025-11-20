@@ -1,260 +1,246 @@
-import { Text, View } from '@/components/Themed';
-import i18n from '@/constants/translations/i18n';
+﻿import { Text, View } from '@/components/Themed';
+import i18nFA from '@/constants/translations/i18nFA';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { ScrollView, StyleSheet } from 'react-native';
 
 export default function FirstAidScreen() {
-  // Optional i18n fallback (kept from your original)
-  const raw = i18n.t('firstAidText') as string;
-  const hasTranslation = raw !== 'firstAidText';
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.iconWrap}>
         <MaterialIcons name="add-moderator" size={64} color="#E53935" />
       </View>
 
-      <Text style={styles.title}>Osnovni priročnik prve pomoči</Text>
-      <Text style={styles.subtitle}>za pohodnike in outdoor navdušence</Text>
+      <Text style={styles.title}>{i18nFA.t('Title')}</Text>
+      <Text style={styles.subtitle}>{i18nFA.t('Subtitle')}</Text>
 
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
-      {/* Intro (shown only if no translation provided) */}
-      {!hasTranslation ? (
-        <View style={styles.card}>
-          <Text style={styles.paragraph}>
-            Na tej strani lahko prebereš osnovna navodila prve pomoči za najpogostejše situacije v naravi.
-          </Text>
-        </View>
-      ) : null}
-
       {/* 1. Najpogostejše poškodbe in stanja */}
-      <Section number={1} title="Najpogostejše poškodbe in zdravstvena stanja v naravi">
-        <Subsection title="Zvini in izpahi">
+      <Section number={1} title={i18nFA.t('Section1_Title')}>
+        <Subsection title={i18nFA.t('Section1_Subsection1_Title')}>
           <Paragraph>
-            Zvin: nateg vezi; bolečina in oteklina. Izpah: kost zapusti sklepno površino; močna bolečina, deformacija, onemogočeno gibanje.
+            {i18nFA.t('Section1_Subsection1_Paragraph1')}
           </Paragraph>
           <BulletList items={[
-            'Pri zvinu metoda RICE: počitek, hlajenje, kompresija, elevacija.',
-            'Pri izpahu ne nastavljaj sam – imobiliziraj v najdenem položaju (ruta, povoj) in poišči zdravniško pomoč.',
+            i18nFA.t('Section1_Subsection1_Bullet1'),
+            i18nFA.t('Section1_Subsection1_Bullet2'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Zlomi">
+        <Subsection title={i18nFA.t('Section1_Subsection2_Title')}>
           <Paragraph>
-            Znaki: huda bolečina, oteklina, nenaravna lega, včasih »pok«. Imobiliziraj z improvizirano opornico, ki zajame sklep nad in pod zlomom.
+            {i18nFA.t('Section1_Subsection2_Paragraph1')}
           </Paragraph>
           <BulletList items={[
-            'Odprt zlom: rano pokrij s sterilno gazo/čisto krpo, nato imobiliziraj.',
-            'Sum na hrbtenico/medenico: ne premikaj (razen v smrtni nevarnosti); poravnano premikanje več oseb hkrati.',
+            i18nFA.t('Section1_Subsection2_Bullet1'),
+            i18nFA.t('Section1_Subsection2_Bullet2'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Krvavitve in rane">
+        <Subsection title={i18nFA.t('Section1_Subsection3_Title')}>
           <BulletList items={[
-            'Močna zunanja krvavitev: pritisk neposredno na rano (gaza/tkanina), neprekinjeno več minut.',
-            'Elevacija uda, če ni zloma.',
-            'Ne odstranjuj globoko zataknjenih tujkov; stabiliziraj in poišči pomoč.',
-            'Turniket samo pri življenjsko nevarnih krvavitvah; zabeleži čas.',
+            i18nFA.t('Section1_Subsection3_Bullet1'),
+            i18nFA.t('Section1_Subsection3_Bullet2'),
+            i18nFA.t('Section1_Subsection3_Bullet3'),
+            i18nFA.t('Section1_Subsection3_Bullet4'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Podhladitev (hipotermija)">
+        <Subsection title={i18nFA.t('Section1_Subsection4_Title')}>
           <BulletList items={[
-            'V zavetje, zamenjaj mokra oblačila, izoliraj od tal.',
-            'Ogrevaj jedro (prsni koš, vrat, glava, dimlje); topli, ne vroči obkladki.',
-            'Topli sladkani napitki, če je pri zavesti; brez alkohola.',
-            'Pri hudi hipotermiji ravnaj nežno, spremljaj dihanje, pokliči 112.',
+            i18nFA.t('Section1_Subsection4_Bullet1'),
+            i18nFA.t('Section1_Subsection4_Bullet2'),
+            i18nFA.t('Section1_Subsection4_Bullet3'),
+            i18nFA.t('Section1_Subsection4_Bullet4'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Sončarica in vročinski udar">
-          <Paragraph>Sončarica: senca, dvignjeno vzglavje, hladni obkladki na glavo/vrat, hidracija.</Paragraph>
-          <Paragraph>Vročinski udar (urgentno!): T višja od 40 °C, zmedenost/nezavest.</Paragraph>
+        <Subsection title={i18nFA.t('Section1_Subsection5_Title')}>
+          <Paragraph>{i18nFA.t('Section1_Subsection5_Paragraph1')}</Paragraph>
+          <Paragraph>{i18nFA.t('Section1_Subsection5_Paragraph2')}</Paragraph>
           <BulletList items={[
-            'Takoj 112.',
-            'Intenzivno hlajenje celega telesa (voda/mokre rjuhe, hladni obkladki v pazduhe, dimlje, vrat).',
-            'Ne dajaj ničesar v usta nezavestnemu; spremljaj in pripravi se na TPO.',
+            i18nFA.t('Section1_Subsection5_Bullet1'),
+            i18nFA.t('Section1_Subsection5_Bullet2'),
+            i18nFA.t('Section1_Subsection5_Bullet3'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Opekline (sončne, toplotne)">
+        <Subsection title={i18nFA.t('Section1_Subsection6_Title')}>
           <BulletList items={[
-            'Sončne: v senco, hladni obkladki/prhanje, hidracija; mehurjev ne prediraj.',
-            'Toplotne: »stop–drop–roll«; hladi 10–15 min s hladno, ne ledeno vodo; sterilno pokrij.',
-            'Ne nanašaj olj, masla ipd. na sveže opekline.',
-            'Velike/globoke/kritične lokacije → zdravnik; spremljaj znake šoka.',
+            i18nFA.t('Section1_Subsection6_Bullet1'),
+            i18nFA.t('Section1_Subsection6_Bullet2'),
+            i18nFA.t('Section1_Subsection6_Bullet3'),
+            i18nFA.t('Section1_Subsection6_Bullet4'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Piki in ugrizi (žuželke, klopi, kače)">
-          <Paragraph>Žuželke: odstrani želo s strganjem (ne stiskaj), hlajenje, opazuj alergijo (anafilaksija!).</Paragraph>
-          <Paragraph>Klop: odstrani s pinceto pri koži, razkuži, opazuj za eritem.</Paragraph>
-          <Paragraph>Kača (modras/gad):</Paragraph>
+        <Subsection title={i18nFA.t('Section1_Subsection7_Title')}>
+          <Paragraph>{i18nFA.t('Section1_Subsection7_Paragraph1')}</Paragraph>
+          <Paragraph>{i18nFA.t('Section1_Subsection7_Paragraph2')}</Paragraph>
+          <Paragraph>{i18nFA.t('Section1_Subsection7_Paragraph3')}</Paragraph>
           <BulletList items={[
-            'Umirjenost in imobilizacija uda, nižje od srca; odstrani nakit.',
-            'Rano nežno izperi, sterilno pokrij; hladni obkladki preko tkanine.',
-            'Takoj 112; NE podvezuj, NE izsesavaj, NE reži rane.',
+            i18nFA.t('Section1_Subsection7_Bullet1'),
+            i18nFA.t('Section1_Subsection7_Bullet2'),
+            i18nFA.t('Section1_Subsection7_Bullet3'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Zastrupitve (rastline, voda, hrana)">
+        <Subsection title={i18nFA.t('Section1_Subsection8_Title')}>
           <BulletList items={[
-            'Preventiva: ne jej neznanih rastlin/gob; vodo prekuhaj/filtriraj.',
-            'Hrana/voda: rehidracija (ORS), po požirkih; aktivno oglje, če ga imaš.',
-            'Rastline/gobe: 112; aktivno oglje (odrasli ~50 g), hrani vzorce za identifikacijo.',
+            i18nFA.t('Section1_Subsection8_Bullet1'),
+            i18nFA.t('Section1_Subsection8_Bullet2'),
+            i18nFA.t('Section1_Subsection8_Bullet3'),
           ]}/>
         </Subsection>
       </Section>
 
       {/* 2. Ukrepi prve pomoči */}
-      <Section number={2} title="Ukrepi prve pomoči">
-        <Subsection title="Oskrba ran in zaustavitev krvavitev">
+      <Section number={2} title={i18nFA.t('Section2_Title')}>
+        <Subsection title={i18nFA.t('Section2_Subsection1_Title')}>
           <BulletList items={[
-            'Zaščiti se (rokavice/čista tkanina).',
-            'Pritisk na rano, kompresijska obveza, elevacija uda.',
-            'Če premoči, ne snemaj – dodaj nove plasti in okrepi pritisk.',
-            'Znaki šoka: polezi, dvigni noge, pokrij, 112.',
+            i18nFA.t('Section2_Subsection1_Bullet1'),
+            i18nFA.t('Section2_Subsection1_Bullet2'),
+            i18nFA.t('Section2_Subsection1_Bullet3'),
+            i18nFA.t('Section2_Subsection1_Bullet4'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Imobilizacija uda">
+        <Subsection title={i18nFA.t('Section2_Subsection2_Title')}>
           <BulletList items={[
-            'Improvizirana opornica (palica, SAM-splint, pena) čez sklep nad in pod poškodbo.',
-            'Podloži, pritrdì, preveri cirkulacijo distalno (pulz/kapilarna polnitev).',
-            'Izpah: fiksiraj v najdenem položaju, ne nastavljaj sam.',
-            'Hrbtenica: ne premikaj, razen ob neposredni nevarnosti; več oseb poravnano.',
+            i18nFA.t('Section2_Subsection2_Bullet1'),
+            i18nFA.t('Section2_Subsection2_Bullet2'),
+            i18nFA.t('Section2_Subsection2_Bullet3'),
+            i18nFA.t('Section2_Subsection2_Bullet4'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Hlajenje in ogrevanje">
+        <Subsection title={i18nFA.t('Section2_Subsection3_Title')}>
           <BulletList items={[
-            'Hlajenje: udarnine/zvini, opekline, vročinski udar – hladna voda/obkladki, led vedno zavit.',
-            'Ogrevanje: hipotermija – jedro telesa, termo folija (sijoča stran k telesu), topli napitki pri zavesti.',
-            'Zamenjaj mokra oblačila; prepreči podhladitev po nesreči.',
+            i18nFA.t('Section2_Subsection3_Bullet1'),
+            i18nFA.t('Section2_Subsection3_Bullet2'),
+            i18nFA.t('Section2_Subsection3_Bullet3'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Ravnanje pri nezavesti">
+
+        <Subsection title={i18nFA.t('Section2_Subsection4_Title')}>
           <BulletList items={[
-            'Preveri odzivnost, pokliči 112.',
-            'Dihanje: odpri dihalno pot; 10 s »glej–poslušaj–čuti«.',
-            'Če diha: stabilni bočni položaj; nadzor dihanja.',
-            'Če ne diha normalno: začni z oživljanjem.',
+            i18nFA.t('Section2_Subsection4_Bullet1'),
+            i18nFA.t('Section2_Subsection4_Bullet2'),
+            i18nFA.t('Section2_Subsection4_Bullet3'),
+            i18nFA.t('Section2_Subsection4_Bullet4'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Osnove oživljanja (CPR/TPO)">
+        <Subsection title={i18nFA.t('Section2_Subsection5_Title')}>
           <BulletList items={[
-            '112 na zvočniku, 30 stisov : 2 vpih, 100–120/min, globina ~5 cm (odrasli).',
-            'Če ne vpihuješ: neprekinjeni stisi 100–120/min.',
-            'AED takoj, ko je na voljo; sledi navodilom.',
-            'Otroci: začni s 5 vpihi; stisk z eno roko (dojenček 2 prsta).',
+            i18nFA.t('Section2_Subsection5_Bullet1'),
+            i18nFA.t('Section2_Subsection5_Bullet2'),
+            i18nFA.t('Section2_Subsection5_Bullet3'),
+            i18nFA.t('Section2_Subsection5_Bullet4'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Položaji">
+        <Subsection title={i18nFA.t('Section2_Subsection6_Title')}>
           <BulletList items={[
-            'Stabilni bočni: nezavesten, ki diha.',
-            'Proti-šok: znaki šoka – noge gor, pokrij.',
-            'Bolečine v prsih: polsede, žveči aspirin (če ni kontraindikacij), 112.',
-            'Težko dihanje: sede/polsede; pomoč pri inhalatorju.',
+            i18nFA.t('Section2_Subsection6_Bullet1'),
+            i18nFA.t('Section2_Subsection6_Bullet2'),
+            i18nFA.t('Section2_Subsection6_Bullet3'),
+            i18nFA.t('Section2_Subsection6_Bullet4'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Alergijska reakcija (anafilaksija)">
+        <Subsection title={i18nFA.t('Section2_Subsection7_Title')}>
           <BulletList items={[
-            'Znaki: koprivnica, edem ustnic/jezika, piskanje, bruhanje, omotica/kolaps.',
-            'Takoj 112; odstrani alergen.',
-            'Adrenalin z avtoinjektorjem v zunanji del stegna; po 5–15 min po potrebi ponovi.',
-            'Antihistaminik/kortikosteroid ne nadomešča adrenalina.',
+            i18nFA.t('Section2_Subsection7_Bullet1'),
+            i18nFA.t('Section2_Subsection7_Bullet2'),
+            i18nFA.t('Section2_Subsection7_Bullet3'),
+            i18nFA.t('Section2_Subsection7_Bullet4'),
           ]}/>
         </Subsection>
       </Section>
 
       {/* 3. Samopomoč v gorah */}
-      <Section number={3} title="Samopomoč v gorah">
+      <Section number={3} title={i18nFA.t('Section3_Title')}>
         <BulletList items={[
-          'Samoocena: pri hudih poškodbah ostani na mestu; dihanje, krvavitve, toplota.',
-          '112; če ni signala, na višje/odprto; SMS včasih uspe.',
-          'Improviziraj: opornice iz palic, povoj iz oblačil, pritisk na krvavitev.',
-          'Premik le, če je varneje; označi mesto nesreče.',
-          'Varčuj z energijo; ohranjaj psihično zbranost.',
+          i18nFA.t('Section3_Subsection1_Bullet1'),
+          i18nFA.t('Section3_Subsection1_Bullet2'),
+          i18nFA.t('Section3_Subsection1_Bullet3'),
+          i18nFA.t('Section3_Subsection1_Bullet4'),
+          i18nFA.t('Section3_Subsection1_Bullet5')
         ]}/>
-        <Subsection title="Toplota, zavetje, tekočina">
+        <Subsection title={i18nFA.t('Section3_Subsection2_Title')}>
           <BulletList items={[
-            'Toplota: suho, sloji, izolacija od tal, termo folija.',
-            'Vročina: senca, prezračevanje, hidracija.',
-            'Zavetje: naravne zavetline ali improviziran bivak.',
-            'Voda: prekuhavanje/tablete/filtri; v skrajni sili raje pij kot hudo dehidriraj.',
+            i18nFA.t('Section3_Subsection2_Bullet1'),
+            i18nFA.t('Section3_Subsection2_Bullet2'),
+            i18nFA.t('Section3_Subsection2_Bullet3'),
+            i18nFA.t('Section3_Subsection2_Bullet4'),
           ]}/>
         </Subsection>
-        <Subsection title="Pritegnitev pozornosti">
+        <Subsection title={i18nFA.t('Section3_Subsection3_Title')}>
           <BulletList items={[
-            'Telefon 112 (tudi prek drugih omrežij), varčuj z baterijo.',
-            'Piščalka: 6 piskov/min klic v sili; odgovor 3 piskov.',
-            'Svetlobni signali/SOS; ogenj in dim (3 ognji v trikotniku).',
-            'Vidne oznake, zapis lokacije, ogromne črke za zrak.',
+            i18nFA.t('Section3_Subsection3_Bullet1'),
+            i18nFA.t('Section3_Subsection3_Bullet2'),
+            i18nFA.t('Section3_Subsection3_Bullet3'),
+            i18nFA.t('Section3_Subsection3_Bullet4'),
           ]}/>
         </Subsection>
       </Section>
 
       {/* 4. Prva pomoč v nahrbtniku */}
-      <Section number={4} title="Prva pomoč v nahrbtniku">
-        <Subsection title="Priporočena vsebina">
+      <Section number={4} title={i18nFA.t('Section4_Title')}>
+        <Subsection title={i18nFA.t('Section4_Subsection1_Title')}>
           <BulletColumns
             columns={[
               [
-                'Sterilni obliži (različne velikosti)',
-                'Sterilne gaze (5×5, 10×10 cm)',
-                'Samolepilni trak',
-                'Povoji (navadni/elastični)',
-                'Sterilne blazinice/robčki',
-                'Antiseptik / gel',
-                'Antibakterijska krema',
-                'Majhne škarje',
+                i18nFA.t('Section4_Subsection1_BulletColumn1_Column1'),
+                i18nFA.t('Section4_Subsection1_BulletColumn1_Column2'),
+                i18nFA.t('Section4_Subsection1_BulletColumn1_Column3'),
+                i18nFA.t('Section4_Subsection1_BulletColumn1_Column4'),
+                i18nFA.t('Section4_Subsection1_BulletColumn1_Column5'),
+                i18nFA.t('Section4_Subsection1_BulletColumn1_Column6'),
+                i18nFA.t('Section4_Subsection1_BulletColumn1_Column7'),
+                i18nFA.t('Section4_Subsection1_BulletColumn1_Column8'),
               ],
               [
-                'Pinceta',
-                'CPR zaščitna folija/maska',
-                'Rokavice (2 para, nitril)',
-                'Trikotna ruta',
-                'Vata/oblazinjenje',
-                'Sponke/varnostne zaponke',
-                'Majhen brivnik/rezilo',
-                'Termometer, beležka, svinčnik',
+                i18nFA.t('Section4_Subsection1_BulletColumn2_Column1'),
+                i18nFA.t('Section4_Subsection1_BulletColumn2_Column2'),
+                i18nFA.t('Section4_Subsection1_BulletColumn2_Column3'),
+                i18nFA.t('Section4_Subsection1_BulletColumn2_Column4'),
+                i18nFA.t('Section4_Subsection1_BulletColumn2_Column5'),
+                i18nFA.t('Section4_Subsection1_BulletColumn2_Column6'),
+                i18nFA.t('Section4_Subsection1_BulletColumn2_Column7'),
+                i18nFA.t('Section4_Subsection1_BulletColumn2_Column8'),
               ],
             ]}
           />
-          <Paragraph small>Komplet prilagodi turi in redno preverjaj roke uporabe (vodoodporna vrečka).</Paragraph>
+          <Paragraph small>{i18nFA.t('Section4_Subsection1_Paragraph1')}</Paragraph>
         </Subsection>
 
-        <Subsection title="Dodatna oprema (izven kompleta)">
+        <Subsection title={i18nFA.t('Section4_Subsection2_Title')}>
           <BulletList items={[
-            'Reševalna termo folija, močan lepilni trak',
-            'Čelna svetilka + baterije, nož/multitool',
-            'Vžigalnik/vžigalice, kompas + zemljevid, piščalka',
-            'Rezervna voda, energijska hrana; vezice, žica, posodica',
+            i18nFA.t('Section4_Subsection2_Bullet1'),
+            i18nFA.t('Section4_Subsection2_Bullet2'),
+            i18nFA.t('Section4_Subsection2_Bullet3'),
+            i18nFA.t('Section4_Subsection2_Bullet4'),
           ]}/>
         </Subsection>
 
-        <Subsection title="Zdravila v nahrbtniku">
+        <Subsection title={i18nFA.t('Section4_Subsection3_Title')}>
           <BulletList items={[
-            'Proti bolečini/temperaturi: paracetamol, ibuprofen (pazite na odmerke).',
-            'Antihistaminik; adrenalin auto-injektor (po navodilu zdravnika).',
-            'ORS praški; po potrebi loperamid; proti slabosti po potrebi.',
-            'Osebna zdravila (inhalator, nitroglicerin, inzulin…) + dodatna doza.',
-            'Obliži za žulje, mazilo za ustnice, kapljice za oči.',
+            i18nFA.t('Section4_Subsection3_Bullet1'),
+            i18nFA.t('Section4_Subsection3_Bullet2'),
+            i18nFA.t('Section4_Subsection3_Bullet3'),
+            i18nFA.t('Section4_Subsection3_Bullet4'),
+            i18nFA.t('Section4_Subsection3_Bullet5'),
           ]}/>
-          <Paragraph small>Zdravila v originalni embalaži z navodili; preverjaj roke uporabe.</Paragraph>
+          <Paragraph small>{i18nFA.t('Section4_Subsection3_Paragraph1')}</Paragraph>
         </Subsection>
       </Section>
 
       <View style={[styles.card, { marginTop: 20, marginBottom: 32 }]}>
         <Text style={[styles.paragraph, { fontStyle: 'italic' }]}>
-          S pravim znanjem, nekaj opreme in mirno glavo lahko učinkovito ukrepaš in rešiš življenje – svoje ali tuje.
-          V dvomu pokliči 112: bolje enkrat preveč kot enkrat premalo. Srečno in varno na vseh poteh!
-        </Text>
+          {i18nFA.t('Outro1')}</Text>
       </View>
     </ScrollView>
   );

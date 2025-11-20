@@ -108,7 +108,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Image
-        source={require('@/assets/images/RESCUA-transparent.png')}
+        source={require('@/assets/images/LOGO_BLUE_SQUARE_TRANSPARENT.png')}
         style={styles.logo}
         resizeMode="contain"
         accessibilityLabel="App logo"

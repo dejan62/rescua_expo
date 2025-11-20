@@ -1,3 +1,4 @@
+import i18n from '@/constants/translations/i18n';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -57,6 +58,12 @@ function RootLayoutNav() {
         <Stack.Screen name="linksExample" options={{ headerShown: true, title: 'Useful Links Example' }} />
         <Stack.Screen name="shareSettings" options={{ headerShown: true, title: 'Settings' }} />
         <Stack.Screen name="sosSettings" options={{ headerShown: true, title: 'Settings' }} />
+        <Stack.Screen
+          name="hiking"
+          options={{
+            title: i18n.t('hikingTitle')
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

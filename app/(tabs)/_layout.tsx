@@ -5,7 +5,7 @@ import i18n from '@/constants/translations/i18n';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Link, Tabs } from 'expo-router';
 import React from 'react';
-import { Pressable, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
 import {
   PaperProvider
 } from "react-native-paper";
@@ -35,7 +35,28 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "RESCUA.eu - vaša senca varnosti",
+          //title: "RESCUA.eu - vaša senca varnosti",
+          
+          headerTitle: () => (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Image
+              source={require('@/assets/images/RESCUA-transparent.png')}
+              style={{ width: 28, height: 28, marginRight: 8 }}
+              resizeMode="contain"
+            />
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '600',
+                color: Colors[colorScheme ?? 'light'].text,
+              }}
+            >
+              RESCUA.eu
+            </Text>
+          </View>
+        ),
+          
+          title: i18n.t('homeTitle'),
           headerTitleStyle: { fontSize: 16 },
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
@@ -43,7 +64,6 @@ export default function TabLayout() {
               <Link href="/links" asChild>
                 <Pressable
                   accessibilityRole="button"
-                  accessibilityLabel="Settings"
                   hitSlop={10}
                   android_ripple={{ radius: 20 }}
                   style={{ paddingHorizontal: 8, paddingVertical: 4 }}
@@ -87,14 +107,13 @@ export default function TabLayout() {
               <Link href="/shareSettings" asChild>
                 <Pressable
                   accessibilityRole="button"
-                  accessibilityLabel="Settings"
                   hitSlop={10}
                   android_ripple={{ radius: 20 }}
                   style={{ paddingHorizontal: 8, paddingVertical: 4 }}
                 >
                   {({ pressed }) => (
                     <TabBarIcon
-                      name="settings"
+                      name="person-pin-circle"
                       color={Colors[colorScheme ?? 'light'].text}
                       style={{ opacity: pressed ? 0.5 : 1 }}
                     />
@@ -104,7 +123,6 @@ export default function TabLayout() {
             <Link href="/links" asChild>
                 <Pressable
                   accessibilityRole="button"
-                  accessibilityLabel="Settings"
                   hitSlop={10}
                   android_ripple={{ radius: 20 }}
                   style={{ paddingHorizontal: 8, paddingVertical: 4 }}
@@ -148,14 +166,13 @@ export default function TabLayout() {
               <Link href="/sosSettings" asChild>
                 <Pressable
                   accessibilityRole="button"
-                  accessibilityLabel="Settings"
                   hitSlop={10}
                   android_ripple={{ radius: 20 }}
                   style={{ paddingHorizontal: 8, paddingVertical: 4 }}
                 >
                   {({ pressed }) => (
                     <TabBarIcon
-                      name="settings"
+                      name="add-circle"
                       color={Colors[colorScheme ?? 'light'].text}
                       style={{ opacity: pressed ? 0.5 : 1 }}
                     />
@@ -165,7 +182,6 @@ export default function TabLayout() {
             <Link href="/links" asChild>
                 <Pressable
                   accessibilityRole="button"
-                  accessibilityLabel="Settings"
                   hitSlop={10}
                   android_ripple={{ radius: 20 }}
                   style={{ paddingHorizontal: 8, paddingVertical: 4 }}
@@ -209,7 +225,6 @@ export default function TabLayout() {
               <Link href="/links" asChild>
                 <Pressable
                   accessibilityRole="button"
-                  accessibilityLabel="Settings"
                   hitSlop={10}
                   android_ripple={{ radius: 20 }}
                   style={{ paddingHorizontal: 8, paddingVertical: 4 }}
@@ -253,7 +268,6 @@ export default function TabLayout() {
               <Link href="/links" asChild>
                 <Pressable
                   accessibilityRole="button"
-                  accessibilityLabel="Settings"
                   hitSlop={10}
                   android_ripple={{ radius: 20 }}
                   style={{ paddingHorizontal: 8, paddingVertical: 4 }}

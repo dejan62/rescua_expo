@@ -1,4 +1,4 @@
-import { getLocales } from 'expo-localization';
+﻿import { getLocales } from 'expo-localization';
 import { I18n } from 'i18n-js';
 
 const i18n = new I18n({
@@ -17,7 +17,8 @@ const i18n = new I18n({
     hiking: 'Hiking',
     etiquette: 'Etiquette',
     usefulLinks: 'Useful Links',
-    mapzs:'maPZS'
+    mapzs:'maPZS',
+    hikingTitle: 'Mountain etiquette',
   },
   de: {
     hello: 'Hallo',
@@ -34,7 +35,8 @@ const i18n = new I18n({
     hiking: 'Wandern',
     etiquette: 'Etikette',
     usefulLinks: 'Nützliche Links',
-    mapzs:'maPZS'
+    mapzs:'maPZS',
+    hikingTitle: 'Berg-Knigge',
   },
   sl: {
     hello: 'Živjo',
@@ -51,7 +53,8 @@ const i18n = new I18n({
     hiking: 'Pohodništvo',
     etiquette: 'Bonton',
     usefulLinks: 'Koristne povezave',
-    mapzs:'maPZS'
+    mapzs:'maPZS',    
+    hikingTitle: 'Gorski bonton',
   },
   cs: {
     hello: 'Ahoj',
@@ -68,7 +71,8 @@ const i18n = new I18n({
     hiking: 'Turistika',
     etiquette: 'Etiketa',
     usefulLinks: 'Užitečné odkazy',
-    mapzs:'maPZS'
+    mapzs:'maPZS',
+    hikingTitle: 'Horský bonton',
   },
   pl: {
     hello: 'Cześć',
@@ -85,7 +89,8 @@ const i18n = new I18n({
     hiking: 'Wędrówki',
     etiquette: 'Etykieta',
     usefulLinks: 'Przydatne linki',
-    mapzs:'maPZS'
+    mapzs:'maPZS',
+    hikingTitle: 'Górski savoir-vivre',
   },
   it: {
     hello: 'Ciao',
@@ -102,7 +107,7 @@ const i18n = new I18n({
     hiking: 'Escursionismo',
     etiquette: 'Galateo',
     usefulLinks: 'Link utili',
-    mapzs:'maPZS'
+    hikingTitle: 'Galateo di montagna',
   },
   fr: {
     hello: 'Bonjour',
@@ -119,7 +124,8 @@ const i18n = new I18n({
     hiking: 'Randonnée',
     etiquette: 'Étiquette',
     usefulLinks: 'Liens utiles',
-    mapzs:'maPZS'
+    mapzs:'maPZS',
+    hikingTitle: 'Bonnes pratiques en montagne',
   },
   hu: {
     hello: 'Szia',
@@ -136,7 +142,8 @@ const i18n = new I18n({
     hiking: 'Túrázás',
     etiquette: 'Etikett',
     usefulLinks: 'Hasznos hivatkozások',
-    mapzs:'maPZS'
+    mapzs:'maPZS',
+    hikingTitle: 'Hegyi etikett',
   },
   hr: {
     hello: 'Bok',
@@ -153,7 +160,9 @@ const i18n = new I18n({
     hiking: 'Planinarenje',
     etiquette: 'Bonton',
     usefulLinks: 'Korisne poveznice',
-    mapzs:'maPZS'
+    mapzs:'maPZS',
+    hikingTitle: 'Planinarski bonton',
+
   },
   sr: {
     hello: 'Zdravo',
@@ -170,7 +179,8 @@ const i18n = new I18n({
     hiking: 'Planinarenje',
     etiquette: 'Bonton',
     usefulLinks: 'Korisni linkovi',
-    mapzs:'maPZS'
+    mapzs:'maPZS',
+    hikingTitle: 'Planinarski bonton',
   },
 });
 
