@@ -1,5 +1,6 @@
 // app/(tabs)/shareSettings.tsx
 import { Theme } from '@/constants/Colors';
+import i18n from '@/constants/translations/i18n';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, useColorScheme } from 'react-native';
@@ -54,7 +55,7 @@ export default function ShareSettingsScreen() {
                 numberOfLines={4}
                 value={defaultText}
                 onChangeText={setDefaultText}
-                placeholder="e.g. Hi, this is my location. GPS: "
+                placeholder={i18n.t('shareExampleText')}
                 right={<TextInput.Affix text={`${defaultText.length}/${CHAR_MAX}`} />}
                 maxLength={CHAR_MAX}
                 textColor={theme.colors.onSurface}
@@ -63,7 +64,7 @@ export default function ShareSettingsScreen() {
                 style={{ backgroundColor: theme.colors.surface,  }}
               />
               <HelperText type="info" style={[{ marginTop: 6 , color: theme.colors.onSurfaceVariant }]}>
-                This text will be pre-filled when you share your location.
+                {i18n.t('shareSettingsHelperText')}
               </HelperText>
             </Card.Content>
           </Card>

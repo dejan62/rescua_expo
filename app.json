@@ -19,7 +19,8 @@
       "buildNumber": "9",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Allow Rescuapp to use your location for navigation and emergency features.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow Rescuapp to use your location for emergency features."
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow Rescuapp to use your location for emergency features.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {

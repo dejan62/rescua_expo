@@ -1,5 +1,6 @@
 // app/(tabs)/index.tsx (or HomeScreen.tsx)
 import { Theme } from '@/constants/Colors';
+import i18n from '@/constants/translations/i18n';
 import { useElevation } from '@/hooks/useElevation'; // ← add
 import { useOpenMeteo } from '@/hooks/useOpenMeteo';
 import * as Location from 'expo-location';
@@ -121,7 +122,7 @@ export default function HomeScreen() {
         buttons={[
           {
             value: 'pos',
-            label: 'Position',
+            label: i18n.t('location'),
             icon: 'crosshairs-gps',
             checkedColor: theme.colors.onPrimary,                  // selected text/icon
             uncheckedColor: theme.colors.onSurface,   // unselected text/icon
@@ -132,7 +133,7 @@ export default function HomeScreen() {
           },
           {
             value: 'wx',
-            label: 'Weather',
+            label: i18n.t('weather'),
             icon: 'weather-partly-cloudy',
             checkedColor: theme.colors.onPrimary,   // selected text/icon
             uncheckedColor: theme.colors.onSurface,   // unselected text/icon
@@ -153,19 +154,19 @@ export default function HomeScreen() {
             {status === 'loading' && (
               <View style={styles.rowCenter}>
                 <ActivityIndicator />
-                <Text style={{ marginLeft: 8 }}>Getting location…</Text>
+                <Text style={{ marginLeft: 8 }}>{i18n.t('gettingLocation')}</Text>
               </View>
             )}
-            {status === 'denied' && <Text>Location permission denied. Enable it in Settings.</Text>}
+            {status === 'denied' && <Text>{i18n.t('locationPermissionDenied')}</Text>}
             {!!error && status !== 'loading' && <Text>{error}</Text>}
 
-            <StatRow label="Latitude" value={fmt(coords.latitude, 6)} />
-            <StatRow label="Longitude" value={fmt(coords.longitude, 6)} />
-            <StatRow label="Accuracy" value={coords.accuracy != null ? `${Math.round(coords.accuracy)} m` : '—'} />
+            <StatRow label={i18n.t('latitude')} value={fmt(coords.latitude, 6)} />
+            <StatRow label={i18n.t('longitude')} value={fmt(coords.longitude, 6)} />
+            <StatRow label={i18n.t('accuracy')} value={coords.accuracy != null ? `${Math.round(coords.accuracy)} m` : '—'} />
 
             {/* NEW: Elevation above mean sea level (preferred) */}
             <StatRow
-              label="Elevation (MSL)"
+              label={i18n.t('elevation')}
               value={
                 eLoading ? '…' :
                   eError ? '—' :
@@ -179,8 +180,8 @@ export default function HomeScreen() {
               value={coords.altitude != null ? `${Math.round(coords.altitude)} m` : '—'}
             />*/}
 
-            <StatRow label="Heading" value={headingText} />
-            <StatRow label="Speed" value={kmh != null ? `${kmh.toFixed(1)} km/h` : '—'} />
+            <StatRow label={i18n.t('heading')} value={headingText} />
+            <StatRow label={i18n.t('speed')} value={kmh != null ? `${kmh.toFixed(1)} km/h` : '—'} />
           </Card.Content>
           <Card.Actions>
             {/* Solid primary button */}
@@ -190,7 +191,7 @@ export default function HomeScreen() {
               buttonColor={theme.colors.primary}
               textColor={theme.colors.onPrimary}
             >
-              {watching ? 'Pause' : 'Refresh once'}
+              {watching ? i18n.t('pause'): i18n.t('refreshOnce')}
             </Button>
           </Card.Actions>
         </Card>
@@ -199,36 +200,36 @@ export default function HomeScreen() {
       {/* WEATHER CARD */}
       {tab === 'wx' && (
         <Card mode="elevated" style={styles.card}>
-          <Card.Title title="Weather (current)" titleVariant="titleMedium" />
+          <Card.Title title={i18n.t('weather')} titleVariant="titleMedium" />
           <Card.Content style={{ gap: 8 }}>
             {wLoading && (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <ActivityIndicator />
-                <Text style={{ marginLeft: 8 }}>Loading weather…</Text>
+                <Text style={{ marginLeft: 8 }}>{i18n.t('loadingWeather')}</Text>
               </View>
             )}
             {wError && <Text>{wError}</Text>}
             {!wLoading && !wError && weather && (
               <>
                 <View style={styles.row}>
-                  <Text variant="titleSmall" style={styles.label}>Condition</Text>
+                  <Text variant="titleSmall" style={styles.label}>{i18n.t('loadingWeather')}</Text>
                   <Text variant="bodyLarge" style={styles.value}>{weather.desc}</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text variant="titleSmall" style={styles.label}>Temperature</Text>
+                  <Text variant="titleSmall" style={styles.label}>{i18n.t('temperature')}</Text>
                   <Text variant="bodyLarge" style={styles.value}>{weather.tempC?.toFixed(1)} °C</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text variant="titleSmall" style={styles.label}>Wind</Text>
+                  <Text variant="titleSmall" style={styles.label}>{i18n.t('wind')}</Text>
                   <Text variant="bodyLarge" style={styles.value}>{weather.windKmh?.toFixed(0)} km/h</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text variant="titleSmall" style={styles.label}>Humidity</Text>
+                  <Text variant="titleSmall" style={styles.label}>{i18n.t('humidity')}</Text>
                   <Text variant="bodyLarge" style={styles.value}>{weather.humidity}%</Text>
                 </View>
                 {weather.updatedAt && (
                   <Text variant="labelSmall" style={{ opacity: 0.7, marginTop: 4 }}>
-                    Updated: {new Date(weather.updatedAt).toLocaleString()}
+                    {i18n.t('updated')}: {new Date(weather.updatedAt).toLocaleString()}
                   </Text>
                 )}
               </>

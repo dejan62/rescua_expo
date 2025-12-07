@@ -56,7 +56,7 @@ export default function TabLayout() {
           </View>
         ),
           
-          title: i18n.t('homeTitle'),
+          title: "Rescuapp",
           headerTitleStyle: { fontSize: 16 },
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (

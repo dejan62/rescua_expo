@@ -27,7 +27,7 @@ export default function SosScreen() {
       // Ensure SMS is available
       const smsOk = await SMS.isAvailableAsync();
       if (!smsOk) {
-        setErrorMsg('SMS is not available on this device.');
+        setErrorMsg(i18n.t?.('smsNotAvailable'));
         return;
       }
 
@@ -39,7 +39,7 @@ export default function SosScreen() {
 
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+        setErrorMsg(i18n.t?.('locationPermissionDenied'));
         return;
       }
 

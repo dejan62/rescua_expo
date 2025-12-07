@@ -46,9 +46,7 @@ export default function ShareScreen() {
 
   const instruction = useMemo(() => {
     const raw = i18n.t('shareInstruction') as string;
-    return raw === 'shareInstruction'
-      ? 'Press the button to share your current GPS location via SMS.'
-      : raw;
+    return raw;
   }, []);
 
   const shareLocation = async () => {
@@ -59,14 +57,14 @@ export default function ShareScreen() {
       // 1) SMS capability
       const smsOk = await SMS.isAvailableAsync();
       if (!smsOk) {
-        setErrorMsg(i18n.t?.('smsNotAvailable') ?? 'SMS is not available on this device.');
+        setErrorMsg(i18n.t?.('smsNotAvailable'));
         return;
       }
 
       // 2) Location permission
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg(i18n.t?.('locDenied') ?? 'Permission to access location was denied.');
+        setErrorMsg(i18n.t?.('locDenied'));
         return;
       }
 
@@ -76,7 +74,7 @@ export default function ShareScreen() {
           accuracy: Location.Accuracy.High,
         }),
         15000,
-        new Error(i18n.t?.('locTimeout') ?? 'Getting location took too long. Try again with a clearer sky view.')
+        new Error(i18n.t?.('locTimeout'))
       );
 
       const { latitude, longitude, altitude, speed } = location.coords;
@@ -86,7 +84,7 @@ export default function ShareScreen() {
         typeof speed === 'number' && !Number.isNaN(speed) ? (speed * 3.6) : undefined;
 
       // 4) Compose message from template (supports {lat}{lon}{url}{alt}{speedKmh})
-      const fallbackText = 'To je moja lokacija: {url}';
+      const fallbackText = i18n.t('myLocation');
       const base = (defaultText || '').trim() || fallbackText;
 
       const finalMessage = renderTemplate(base, {
@@ -103,7 +101,7 @@ export default function ShareScreen() {
       await SMS.sendSMSAsync(recipients, finalMessage);
     } catch (error: any) {
       //console.error('Error sharing location:', error);
-      setErrorMsg(error?.message ?? (i18n.t?.('shareError') ?? 'Something went wrong while sharing your location.'));
+      setErrorMsg(error?.message ?? (i18n.t?.('shareError')));
     } finally {
       setLoading(false);
     }
